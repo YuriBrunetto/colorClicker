@@ -1,0 +1,31 @@
+<html>
+    <head>
+        
+        <title>colorClick</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="core.js"></script>
+    </head>
+    <body>
+    
+        <div class="content-color">
+            <div class="cor" id="color">rgb(0, 0, 0)</div>
+        </div>
+        <div class="content-interface">
+            <div class="interface-wrap">
+                <div class="output">You don't have anything! You can click... Maybe something happens.</div>
+                <a href="javascript:;" title="Click-me" class="clicker" id="clicker">Click-me</a>
+                <div class="counter" id="counter"></div>
+                <div class="frag-per-second" id="per-second"></div>
+                
+                <div class="alerta"></div>
+            </div>
+               
+            <div class="store" id="products">
+                <!-- a href="javascript:;" x-id="0" class="store-a">Pencil <span class="store-span">Cost: 50 fragments</span></a -->
+                <div id="tooltipAnchor"><div id="tooltip" onMouseOut="Game.tooltip.hide();"></div></div>
+            </div>
+        </div>
+        
+    </body>
+</html>
