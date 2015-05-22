@@ -234,7 +234,7 @@ $(function(){
             Game.ObjectsById = [];
             Game.ObjectsN = 0;
             Game.ThingsOwned = 0;
-            Game.Object = function(name, commonName, desc, price, cps){
+            Game.Object = function(name, commonName, desc, price, cps, red, green, blue){
                 this.id = Game.ObjectsN;
                 this.name = name;
                 commonName = commonName.split("|");
@@ -245,6 +245,9 @@ $(function(){
                 this.basePrice = price;
                 this.price = this.basePrice;
                 this.cps = cps;
+                this.red = red;
+                this.green = green;
+                this.blue = blue;
                 
                 this.amount = 0;
                 this.bought = 0;
@@ -258,8 +261,10 @@ $(function(){
                         this.bought++;
                         price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
                         this.price = price;
+                        Game.red += this.red;
+                        Game.green += this.green;
+                        Game.blue += this.blue;
                         Game.recalculateGains = 1;
-                        // if (this.amount == 1 && this.id != 0) l("row"+this.id).className = "row enabled";
                         Game.ThingsOwned++;
                     }
                 }
@@ -283,8 +288,8 @@ $(function(){
                 return this;
             }
             
-            new Game.Object("Pencil", "pencil|pencils|clicked", "Auto clicks every 10 seconds", 15, 0.1);
-            new Game.Object("Ink", "ink|ink|clicked", "Auto clicks every 5 seconds", 30, 0.2);
+            new Game.Object("Pencil", "pencil|pencils|clicked", "Auto clicks every 10 seconds", 15, 0.1, 0, 0, 1);
+            new Game.Object("Ink", "ink|ink|clicked", "Auto clicks every 5 seconds", 30, 0.2, 0, 0, 2);
             
             Game.ComputeCps = function(base, add, mult, bonus) {
                 if (!bonus) bonus = 0;
@@ -309,6 +314,10 @@ $(function(){
             Game.Earn(Game.pointsPs / Game.fps);
 
             if (Game.storeToRebuild) Game.RebuildStore();
+            
+            if (Game.red >= 255 || Game.green >= 255 || Game.blue >= 255) {
+                
+            }
         }
 
         // draw
@@ -319,7 +328,7 @@ $(function(){
             // updates the points
             l("counter").innerHTML = Beautify(Math.round(Game.points)) + unit;
             l("per-second").innerHTML = Beautify(Game.pointsPs, 1) + " per second";
-            l("color").innerHTML = "rgba(" + Game.red + ", " + Game.green + ", " + Game.blue + ")";
+            l("color").innerHTML = "rgb(" + Game.red + ", " + Game.green + ", " + Game.blue + ")";
             $(".content-color").css("background-color", "rgba(" + Game.red + ", " + Game.green + ", " + Game.blue + ",1)");
             
             document.title = Beautify(Game.points) + " " + (Game.points == 1 ? "fragment":"fragments") + " - colorClicker";
