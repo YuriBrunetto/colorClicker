@@ -1,4 +1,4 @@
-(function(){
+$(function(){
 
     function l(what) { return document.getElementById(what); }
     
@@ -67,13 +67,15 @@
             Game.mouseCps = function(){
                 var add = 0;
                 if (Game.Has("Pencil fragments")) add += 0.1;
-                if (Game.Has("Pencil")) add += 0.5;
+                if (Game.Has("Pencil")) { add += 0.5; add += Game.pointPs * 0.0001; }
                 if (Game.Has("Ink")) add += 1;
                 if (Game.Has("Brush")) add += 1.5;
                 if (Game.Has("Paint-brush")) add += 2;
                 
                 var num = 0;
-                for (var i in Game.Objects) { if(Game.Objects[i].name != "Cursor") num += Game.Objects[i].amount; }
+                //for (var i in Game.Objects) { if(Game.Objects[i].name != "Cursor") num += Game.Objects[i].amount; }
+                var mult = 1;
+                return mult * Game.ComputeCps(1, 0, 0, add);
             }
             
             Game.computedMouseCps = 1;
@@ -95,72 +97,134 @@
             }
             l("clicker").onclick = Game.ClickPoint; // The broken mouse convention! +1
             
-            Game.tooltip={text:"",x:0,y:0,origin:0,on:0};
-            Game.tooltip.draw=function(from,text,x,y,origin)
-            {
-                this.text=text;
-                this.x=x;
-                this.y=y;
-                this.origin=origin;
-                var tt=l("tooltip");
-                var tta=l("tooltipAnchor");
-                tta.style.display="block";
-                var rect=from.getBoundingClientRect();
-                //var screen=tta.parentNode.getBoundingClientRect();
-                var x=0,y=0;
-                tt.style.left="auto";
-                tt.style.top="auto";
-                tt.style.right="auto";
-                tt.style.bottom="auto";
-                tta.style.left="auto";
-                tta.style.top="auto";
-                tta.style.right="auto";
-                tta.style.bottom="auto";
-                tt.style.width="auto";
-                tt.style.height="auto";
-                if (this.origin=="left")
-                {
-                    x=rect.left;
-                    y=rect.top;
-                    tt.style.right="0";
-                    tt.style.top="0";
+            // cps
+            Game.recalculateGains = 1;
+            Game.CalculateGains = function(){
+                Game.pointsPs = 0;
+                
+                for (var i in Game.Objects) {
+                    var me = Game.Objects[i];
+                    me.storedCps = (typeof(me.cps) == "function" ? me.cps() : me.cps);
+                    me.storedTotalCps = me.amount * me.storedCps;
+                    Game.pointsPs += me.storedTotalCps;
                 }
-                else if (this.origin=="bottom-right")
-                {
-                    x=rect.right;
-                    y=rect.bottom;
-                    tt.style.right="0";
-                    tt.style.top="0";
-                }
-                else {alert("Tooltip anchor "+this.origin+" needs to be implemented");}
-                tta.style.left=Math.floor(x+this.x)+"px";
-                tta.style.top=Math.floor(y-32+this.y)+"px";
-                tt.innerHTML=unescape(text);
-                this.on=1;
+                
+                Game.pointsPs *= Game.globalCpsMult;
+                Game.computedMouseCps = Game.mouseCps();
+                Game.recalculateGains = 0;
             }
-            Game.tooltip.hide=function()
-            {
-                l("tooltipAnchor").style.display="none";
+            
+            Game.tooltip = { text:"", x:0, y:0, origin:0, on:0 };
+            Game.tooltip.draw=function(from, text, x, y, origin) {
+                this.text = text;
+                this.x = x;
+                this.y = y;
+                this.origin = origin;
+                var tt = l("tooltip");
+                var tta = l("tooltipAnchor");
+                tta.style.display = "block";
+                var rect = from.getBoundingClientRect();
+                //var screen=tta.parentNode.getBoundingClientRect();
+                var x = 0, y = 0;
+                tt.style.left = "auto";
+                tt.style.top = "auto";
+                tt.style.right = "auto";
+                tt.style.bottom = "auto";
+                tta.style.left = "auto";
+                tta.style.top = "auto";
+                tta.style.right = "auto";
+                tta.style.bottom = "auto";
+                tt.style.width = "auto";
+                tt.style.height = "auto";
+                if (this.origin == "left") {
+                    x = rect.left;
+                    y = rect.top;
+                    tt.style.right = "0";
+                    tt.style.top = "0";
+                } else if (this.origin=="bottom-right") {
+                    x = rect.right;
+                    y = rect.bottom;
+                    tt.style.right = "0";
+                    tt.style.top = "0";
+                } else { 
+                    alert("Tooltip anchor " + this.origin + " needs to be implemented");
+                }
+                
+                tta.style.left = Math.floor(x + this.x) + "px";
+                tta.style.top = Math.floor(y - 32 + this.y) + "px";
+                tt.innerHTML = unescape(text);
+                this.on = 1;
+            }
+            
+            Game.tooltip.hide = function() {
+                l("tooltipAnchor").style.display = "none";
                 this.on=0;
             }
-            Game.getTooltip=function(text,x,y,origin)
-            {
-                origin=(origin?origin:"middle");
+            
+            Game.getTooltip = function(text, x, y, origin) {
+                origin = (origin ? origin : "middle");
                 return 'onMouseOut="Game.tooltip.hide();" onMouseOver="Game.tooltip.draw(this,\''+escape(text)+'\','+x+','+y+',\''+origin+'\');"';
             }
             
-            Game.RebuildStore=function()//redraw the store from scratch
-            {
-                var str='';
-                for (var i in Game.Objects)
-                {
-                    var me=Game.Objects[i];
-                    str+='<div class="product" '+Game.getTooltip(
-                    '<div style="min-width:300px;"><div style="float:right;"><span class="price">'+Beautify(Math.round(me.price))+'</span></div><div class="name">'+me.name+'</div>'+'<small>[owned : '+me.amount+'</small>]<div class="description">'+me.desc+'</div></div>'
-                    ,0,0,'left')+' onclick="Game.ObjectsById['+me.id+'].buy();" id="product'+me.id+'"><div class="icon" style="background-image:url(img/'+me.icon+'.png);"></div><div class="content"><div class="title">'+me.displayName+'</div><span class="price">'+Beautify(Math.round(me.price))+'</span>'+(me.amount>0?('<div class="title owned">'+me.amount+'</div>'):'')+'</div></div>';
+            Game.RebuildStore = function() { // redraw the store from scratch
+                var str = "";
+                for (var i in Game.Objects) {
+                    var me = Game.Objects[i];
+                    // <a href="javascript:;" class="store-a">Pencil <span class="store-span">Cost: 50 fragments</span></a>
+                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='" + me.id + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(Math.round(me.price)) + " fragments</span></div>";
                 }
-                l('products').innerHTML=str;
-                Game.storeToRebuild=0;
+                l('products').innerHTML = str;
+                Game.storeToRebuild = 0;
+            }
+            
+            // upgrades
+            Game.upgradesToRebuild = 1;
+            Game.Upgrades = [];
+            Game.UpgradesById = [];
+            Game.UpgradesN = 0;
+            Game.UpgradesInStore = [];
+            Game.UpgradesOwn = [];
+            Game.Upgrade = function(name, desc, price, buyFunction) {
+                this.id = Game.UpgradesN;
+                this.name = name;
+                this.desc = desc;
+                this.basePrice = price;
+                this.buyFunction = buyFunction;
+                this.unlocked = 0;
+                this.bought = 0;
+                this.hide = 0; // 0 == show, 3 == hide (1-2: I have no idea)
+                this.order = this.id;
+                if (order) this.order = order + this.id * 0.001;
+                this.type = "";
+                if (type) this.type = type;
+                this.power = 0;
+                if (power) this.power = power;
+                
+                this.buy = function() {
+                    var cancelPurchase = 0;
+                    if (this.clickFunction) cancelPurchase = !this.clickFunction();
+                    
+                    if (!cancelPurchase) {
+                        var price = this.price;
+                        if (Game.points > price && !this.bought) {
+                            Game.Spend(price);
+                            this.bought = 1;
+                            if (this.buyFunction) this.buyFunction();
+                            Game.upgradesToRebuild = 1;
+                            Game.recalculateGains = 1;
+                            Game.UpgradesOwn++;
+                        }
+                    }
+                }
+                
+                Game.Upgrades[this.name] = this;
+                Game.UpgradesById[this.id] = this;
+                Game.UpgradesN++;
+                return this;
+            }
+            
+            Game.Has = function(what) {
+                return (Game.Upgrades[what] ? Game.Upgrades[what].bought : 0);
             }
             
             // things
@@ -187,14 +251,15 @@
                 
                 this.buy = function(){
                     var price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
-                    
+
                     if (Game.points > price) {
                         Game.Spend(price);
                         this.amount++;
                         this.bought++;
                         price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
                         this.price = price;
-                        if (this.amount == 1 && this.id != 0) l("row"+this.id).className = "row enabled";
+                        Game.recalculateGains = 1;
+                        // if (this.amount == 1 && this.id != 0) l("row"+this.id).className = "row enabled";
                         Game.ThingsOwned++;
                     }
                 }
@@ -207,6 +272,7 @@
                         this.amount--;
                         price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
                         this.price = price;
+                        Game.recalculateGains = 1;
                         Game.ThingsOwned--;
                     }
                 }
@@ -217,34 +283,47 @@
                 return this;
             }
             
-            new Game.Object("Pencil", "pencil|pencils|clicked", "Auto clicks every 10 seconds", 15, 0.5);
+            new Game.Object("Pencil", "pencil|pencils|clicked", "Auto clicks every 10 seconds", 15, 0.1);
+            new Game.Object("Ink", "ink|ink|clicked", "Auto clicks every 5 seconds", 30, 0.2);
+            
+            Game.ComputeCps = function(base, add, mult, bonus) {
+                if (!bonus) bonus = 0;
+                return ((base + add) * (Math.pow(2, mult)) + bonus);
+            }
             
             Game.Loop();
         }
         
         // lógica  
-            Game.Logic = function(){
-                Game.Earn(Game.pointsPs / Game.fps);
-                
-                for (var i in Game.Objects) {
-                    var me = Game.Objects[i];
-                    me.totalPoints += me.storedTotalCps / Game.fps;
-                }
-                     
-                Game.pointsd += (Game.points - Game.pointsd) * 0.3;
-                
-                Game.RebuildStore();
+        Game.Logic = function(){
+            Game.Earn(Game.pointsPs / Game.fps);
+
+            for (var i in Game.Objects) {
+                var me = Game.Objects[i];
+                me.totalPoints += me.storedTotalCps / Game.fps;
             }
+
+            Game.pointsd += (Game.points - Game.pointsd) * 0.3;
             
-            // draw
-            Game.Draw = function(){
-                var unit = (Math.round(Game.pointsd) <= 1 ? " fragment" : " fragments");
-                if (Math.round(Game.pointsd).toString().length > 11) unit = "<br>fragments";
-                
-                // updates the points
-                l("counter").innerHTML = Beautify(Math.round(Game.pointsd)) + unit;
-                l("per-second").innerHTML = Beautify(Game.pointsPs, 1) + " per second";
-            }
+            if (Game.recalculateGains) Game.CalculateGains();
+            Game.Earn(Game.pointsPs / Game.fps);
+
+            if (Game.storeToRebuild) Game.RebuildStore();
+        }
+
+        // draw
+        Game.Draw = function(){
+            var unit = (Math.round(Game.points) <= 1 ? " fragment" : " fragments");
+            if (Math.round(Game.points).toString().length > 11) unit = "<br>fragments";
+
+            // updates the points
+            l("counter").innerHTML = Beautify(Math.round(Game.points)) + unit;
+            l("per-second").innerHTML = Beautify(Game.pointsPs, 1) + " per second";
+            l("color").innerHTML = "rgba(" + Game.red + ", " + Game.green + ", " + Game.blue + ")";
+            $(".content-color").css("background-color", "rgba(" + Game.red + ", " + Game.green + ", " + Game.blue + ",1)");
+            
+            document.title = Beautify(Game.points) + " " + (Game.points == 1 ? "fragment":"fragments") + " - colorClicker";
+        }
         
         // da loop!
         Game.Loop = function(){
@@ -275,4 +354,4 @@
         if (!Game.ready) Game.Init();  
     };
     
-})();
+});
