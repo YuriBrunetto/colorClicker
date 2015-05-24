@@ -315,9 +315,14 @@ $(function(){
 
             if (Game.storeToRebuild) Game.RebuildStore();
             
-            if (Game.red >= 255 || Game.green >= 255 || Game.blue >= 255) {
-                
-            }
+            if (Game.red >= 255)
+                Game.red = 255;
+            
+            if (Game.green >= 255)
+                Game.green = 255;
+
+            if (Game.blue >= 255)
+                Game.blue = 255;
         }
 
         // draw
