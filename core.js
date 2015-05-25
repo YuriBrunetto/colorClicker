@@ -110,7 +110,7 @@
                     for (var i in Game.Objects) {
                         var objectsLength = Game.ObjectsById.length;
                         for (var i = 0; i <= objectsLength; i++) {
-                            if (Game.Has(Game.Objects[i].name)
+                            
                         }
                     }
                 }
