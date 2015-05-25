@@ -1,4 +1,4 @@
-$(function(){
+(function(){
 
     function l(what) { return document.getElementById(what); }
     
@@ -23,6 +23,13 @@ $(function(){
         return str;
     }
     
+    function alerta(msg) {
+        l("alerta").innerHTML = msg;
+        l("alerta").style.opacity = 1;
+        setTimeout(function(){ l("alerta").style.opacity = 0; }, 3000);
+        return false;
+    }
+    
     Game = {};
     
     Game.Launch = function(){
@@ -40,6 +47,14 @@ $(function(){
             
             Game.catchupLogic = 0;
             Game.accumulatedDelay = 0;
+            
+            Game.Errors = [
+                "More fragments is required!",
+                "You can't afford that, mate.",
+                "Nope.",
+                "Maybe later.",
+                "Are you kidding? Just click the damn button."
+            ];
             
             // points and stuff
             Game.pointsEarned = 0;
@@ -73,7 +88,6 @@ $(function(){
                 if (Game.Has("Paint-brush")) add += 2;
                 
                 var num = 0;
-                //for (var i in Game.Objects) { if(Game.Objects[i].name != "Cursor") num += Game.Objects[i].amount; }
                 var mult = 1;
                 return mult * Game.ComputeCps(1, 0, 0, add);
             }
@@ -92,7 +106,15 @@ $(function(){
                     }
                     Game.Earn(Game.computedMouseCps);
                     Game.pointClicks++;
+                    
+                    for (var i in Game.Objects) {
+                        var objectsLength = Game.ObjectsById.length;
+                        for (var i = 0; i <= objectsLength; i++) {
+                            if (Game.Has(Game.Objects[i].name)
+                        }
+                    }
                 }
+                
                 Game.lastClick = new Date().getTime();
             }
             l("clicker").onclick = Game.ClickPoint; // The broken mouse convention! +1
@@ -114,65 +136,14 @@ $(function(){
                 Game.recalculateGains = 0;
             }
             
-            Game.tooltip = { text:"", x:0, y:0, origin:0, on:0 };
-            Game.tooltip.draw=function(from, text, x, y, origin) {
-                this.text = text;
-                this.x = x;
-                this.y = y;
-                this.origin = origin;
-                var tt = l("tooltip");
-                var tta = l("tooltipAnchor");
-                tta.style.display = "block";
-                var rect = from.getBoundingClientRect();
-                //var screen=tta.parentNode.getBoundingClientRect();
-                var x = 0, y = 0;
-                tt.style.left = "auto";
-                tt.style.top = "auto";
-                tt.style.right = "auto";
-                tt.style.bottom = "auto";
-                tta.style.left = "auto";
-                tta.style.top = "auto";
-                tta.style.right = "auto";
-                tta.style.bottom = "auto";
-                tt.style.width = "auto";
-                tt.style.height = "auto";
-                if (this.origin == "left") {
-                    x = rect.left;
-                    y = rect.top;
-                    tt.style.right = "0";
-                    tt.style.top = "0";
-                } else if (this.origin=="bottom-right") {
-                    x = rect.right;
-                    y = rect.bottom;
-                    tt.style.right = "0";
-                    tt.style.top = "0";
-                } else { 
-                    alert("Tooltip anchor " + this.origin + " needs to be implemented");
-                }
-                
-                tta.style.left = Math.floor(x + this.x) + "px";
-                tta.style.top = Math.floor(y - 32 + this.y) + "px";
-                tt.innerHTML = unescape(text);
-                this.on = 1;
-            }
-            
-            Game.tooltip.hide = function() {
-                l("tooltipAnchor").style.display = "none";
-                this.on=0;
-            }
-            
-            Game.getTooltip = function(text, x, y, origin) {
-                origin = (origin ? origin : "middle");
-                return 'onMouseOut="Game.tooltip.hide();" onMouseOver="Game.tooltip.draw(this,\''+escape(text)+'\','+x+','+y+',\''+origin+'\');"';
-            }
-            
             Game.RebuildStore = function() { // redraw the store from scratch
                 var str = "";
                 for (var i in Game.Objects) {
                     var me = Game.Objects[i];
                     // <a href="javascript:;" class="store-a">Pencil <span class="store-span">Cost: 50 fragments</span></a>
-                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='" + me.id + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(Math.round(me.price)) + " fragments</span></div>";
+                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='" + me.id + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments</span></div>";
                 }
+                
                 l('products').innerHTML = str;
                 Game.storeToRebuild = 0;
             }
@@ -212,7 +183,7 @@ $(function(){
                             if (this.buyFunction) this.buyFunction();
                             Game.upgradesToRebuild = 1;
                             Game.recalculateGains = 1;
-                            Game.UpgradesOwn++;
+                            Game.UpgradesOwn++; 
                         }
                     }
                 }
@@ -224,7 +195,7 @@ $(function(){
             }
             
             Game.Has = function(what) {
-                return (Game.Upgrades[what] ? Game.Upgrades[what].bought : 0);
+                return (Game.Objects[what] ? Game.Objects[what].bought : 0);
             }
             
             // things
@@ -266,7 +237,13 @@ $(function(){
                         Game.blue += this.blue;
                         Game.recalculateGains = 1;
                         Game.ThingsOwned++;
+                        Game.RebuildStore();
+                    } else {
+                        var randomError = Math.floor(Math.random() * Game.Errors.length);
+                        alerta(Game.Errors[randomError]);
                     }
+                    
+                    return false;
                 }
                 this.sell = function(){
                     var price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
@@ -296,6 +273,13 @@ $(function(){
                 return ((base + add) * (Math.pow(2, mult)) + bonus);
             }
             
+            // win
+            
+            Game.Win = function(){
+                
+            }
+            
+            //
             Game.Loop();
         }
         
@@ -323,6 +307,9 @@ $(function(){
 
             if (Game.blue >= 255)
                 Game.blue = 255;
+            
+            if (Game.red == 255 && Game.green == 255 && Game.blue == 255)
+                Game.Win();
         }
 
         // draw
@@ -333,8 +320,10 @@ $(function(){
             // updates the points
             l("counter").innerHTML = Beautify(Math.round(Game.points)) + unit;
             l("per-second").innerHTML = Beautify(Game.pointsPs, 1) + " per second";
+            
+            // updates the bg color 
             l("color").innerHTML = "rgb(" + Game.red + ", " + Game.green + ", " + Game.blue + ")";
-            $(".content-color").css("background-color", "rgba(" + Game.red + ", " + Game.green + ", " + Game.blue + ",1)");
+            l("content-color").style.backgroundColor = "rgba(" + Game.red + ", " + Game.green + ", " + Game.blue + ", 1)";
             
             document.title = Beautify(Game.points) + " " + (Game.points == 1 ? "fragment":"fragments") + " - colorClicker";
         }
@@ -368,4 +357,4 @@ $(function(){
         if (!Game.ready) Game.Init();  
     };
     
-});
+})();

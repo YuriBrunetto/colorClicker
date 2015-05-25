@@ -1,19 +1,17 @@
 * { margin:0; padding:0; color:#fff; }
 body { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; color:#fff; }
 
-.content-color { width:100%; height:50%; position:fixed; top:0; left:0; }
-.content-interface { width:100%; height:50%; position:fixed; bottom:0; left:0; background-color:#f9f9f9; }
-.interface-wrap { width:990px; padding:50px 0; height:200px; margin:0 auto; }
-.output { text-align:center; color:#666; }
+.content-color { width:100%; height:50%; float:left; position:relative; }
+.content-interface { width:80%; height:50%; float:left; background-color:#f9f9f9; }
+.interface-wrap { width:100%; padding:50px 0; height:200px; margin:0 auto; }
+.alerta { height:20px; line-height:20px; color:brown; text-align:center; font-size:14px; margin-top:30px; opacity:0; transition:500ms opacity; }
 .clicker { width:120px; height:30px; line-height:30px; padding:10px 0; display:block; margin:40px auto; border-radius:5px; background-color:#34495e; 
     color:#fff; text-align:center; text-decoration:none; border-bottom:3px solid #2c3e50; }
 .counter { font-size:16px; margin-top:30px; text-align:center; color:#999; }
 .frag-per-second { font-size:10px; margin-top:2px; text-align:center; color:#aaa; }
 
-.alerta { color:brown; text-align:center; font-size:12px; margin-top:30px; display:none; }
-
-.store { width:300px; height:100%; position:absolute; right:0; top:0; background-color:#ecf0f1; }
-.store-a { display:block; height:30px; padding:15px 0; line-height:30px; text-align:center; color:brown; text-decoration:none; cursor:pointer; } 
+.store { width:20%; height:100%; float:right; background-color:#ecf0f1; }
+.store-a { display:block; height:15px; padding:24px 8px; line-height:15px; text-align:center; color:cadetblue; text-decoration:none; cursor:pointer; } 
 .store-span { color:#aaa; font-size:12px; }
 
 .cor { width:600px; height:60px; text-align:center; font-size:50px; line-height:50px; position:absolute; left:50%; top:50%; margin-left:-300px;
