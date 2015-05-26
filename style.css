@@ -1,24 +1,47 @@
-* { margin:0; padding:0; color:#fff; }
-body { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; color:#fff; }
+* { margin:0; padding:0; }
+body { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; color:#333; }
+strong { color:#999; }
+h2 { color:#333; }
+a { text-decoration:none; color:#444; }
+ul { margin:8px 0 0 26px; color:#666; }
+li { line-height:20px; }
 
 .content-color { width:100%; height:50%; float:left; position:relative; }
 .content-interface { width:80%; height:50%; float:left; background-color:#f9f9f9; }
 .interface-wrap { width:100%; padding:50px 0; height:200px; margin:0 auto; }
+.about { width:60px; height:14px; line-height:14px; padding:8px 0; display:block; text-align:center; position:absolute; top:0; right:0; color:#888;
+    font-size:12px; text-decoration:none; transition:400ms color; }
+.about:hover { color:#666; }
+
+.about-wrap { width:100%; height:100%; position:fixed; background-color:rgba(0,0,0,0.7); opacity:0; z-index:-100; transition:600ms all; }
+.about-wrap-ativo { opacity:1; z-index:100; }
+.about-container { width:500px; padding:40px; background-color:#fff; border-radius:6px; position:absolute; left:50%; top:0; margin-left:-290px;
+    margin-top:-165px; color:#999; font-size:14px; opacity:0; transition:600ms all; }
+.about-container-ativo { top:50%; opacity:1; }
+.about-close { width:80px; height:20px; display:block; line-height:20px; padding:8px 0; text-align:center; float:right; border-radius:5px;
+    background-color:#f9f9f9; transition:400ms background-color; margin-top:30px; }
+.about-close:hover { background-color:#eee; }
+ 
 .alerta { height:20px; line-height:20px; color:brown; text-align:center; font-size:14px; margin-top:30px; opacity:0; transition:500ms opacity; }
+
 .clicker { width:120px; height:30px; line-height:30px; padding:10px 0; display:block; margin:40px auto; border-radius:5px; background-color:#34495e; 
     color:#fff; text-align:center; text-decoration:none; border-bottom:3px solid #2c3e50; }
 .counter { font-size:16px; margin-top:30px; text-align:center; color:#999; }
 .frag-per-second { font-size:10px; margin-top:2px; text-align:center; color:#aaa; }
 
-.store { width:20%; height:100%; float:right; background-color:#ecf0f1; }
-.store-a { display:block; height:15px; padding:24px 8px; line-height:15px; text-align:center; color:cadetblue; text-decoration:none; cursor:pointer; } 
+.store { width:20%; float:right; background-color:#fff; }
+.store-a { display:block; height:15px; padding:24px 8px; line-height:15px; text-align:center; color:cadetblue; text-decoration:none; cursor:pointer; 
+    border-bottom:1px solid #fff; position:relative; transition:400ms opacity; }
+.store-a:hover { opacity:0.7; }
 .store-span { color:#aaa; font-size:12px; }
+.store-details { width:200px; height:30px; line-height:30px; font-size:12px; background-color:rgba(0,0,0,0.6); color:#fff; text-align:center; position:absolute; 
+    left:0; top:-20px; z-index:300; }
 
 .cor { width:600px; height:60px; text-align:center; font-size:50px; line-height:50px; position:absolute; left:50%; top:50%; margin-left:-300px;
-    margin-top:-30px; transition:1s ease-in color; }
+    margin-top:-30px; transition:1s ease-in color; color:#fff; }
 
 .click-me { width:300px; height:36px; line-height:36px; font-size:18px; text-align:center; display:block; margin:50px auto 0 auto; font-weight:bold; 
     text-decoration:none; transition:1s ease-in color; }
 
 .achievements { width:100%; height:30px; line-height:30px; padding:10px 0; background-color:rgba(0,0,0,0.5); position:fixed; left:0; bottom:0; color:#fff;
-    text-align:center; display:none; }  
+    text-align:center; display:none; }

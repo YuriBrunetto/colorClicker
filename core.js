@@ -81,15 +81,13 @@
             
             Game.mouseCps = function(){
                 var add = 0;
-                if (Game.Has("Pencil fragments")) add += 0.1;
-                if (Game.Has("Pencil")) { add += 0.5; add += Game.pointPs * 0.0001; }
+                /*if (Game.Has("Pencil fragments")) add += 0.1;
+                if (Game.Has("Pencil"))  add += 0.5;
                 if (Game.Has("Ink")) add += 1;
                 if (Game.Has("Brush")) add += 1.5;
-                if (Game.Has("Paint-brush")) add += 2;
+                if (Game.Has("Paint-brush")) add += 2;*/
                 
-                var num = 0;
-                var mult = 1;
-                return mult * Game.ComputeCps(1, 0, 0, add);
+                return Game.ComputeCps(1, 0, 0, add);
             }
             
             Game.computedMouseCps = 1;
@@ -104,15 +102,9 @@
                         Game.autoclickerDetected += Game.fps;
                         if (Game.autoclickerDetected >= Game.fps*5) console.log("King!");
                     }
+                    
                     Game.Earn(Game.computedMouseCps);
                     Game.pointClicks++;
-                    
-                    for (var i in Game.Objects) {
-                        var objectsLength = Game.ObjectsById.length;
-                        for (var i = 0; i <= objectsLength; i++) {
-                            
-                        }
-                    }
                 }
                 
                 Game.lastClick = new Date().getTime();
@@ -140,8 +132,8 @@
                 var str = "";
                 for (var i in Game.Objects) {
                     var me = Game.Objects[i];
-                    // <a href="javascript:;" class="store-a">Pencil <span class="store-span">Cost: 50 fragments</span></a>
-                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='" + me.id + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments</span></div>";
+
+                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments</span></div>";
                 }
                 
                 l('products').innerHTML = str;
@@ -205,16 +197,13 @@
             Game.ObjectsById = [];
             Game.ObjectsN = 0;
             Game.ThingsOwned = 0;
-            Game.Object = function(name, commonName, desc, price, cps, red, green, blue){
+            Game.Object = function(name, desc, price, increase, cps, red, green, blue){
                 this.id = Game.ObjectsN;
                 this.name = name;
-                commonName = commonName.split("|");
-                this.single = commonName[0];
-                this.plural = commonName[1];
-                this.actionName = commonName[2];
                 this.desc = desc;
                 this.basePrice = price;
                 this.price = this.basePrice;
+                this.increase = increase;
                 this.cps = cps;
                 this.red = red;
                 this.green = green;
@@ -242,8 +231,6 @@
                         var randomError = Math.floor(Math.random() * Game.Errors.length);
                         alerta(Game.Errors[randomError]);
                     }
-                    
-                    return false;
                 }
                 this.sell = function(){
                     var price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
@@ -265,8 +252,8 @@
                 return this;
             }
             
-            new Game.Object("Pencil", "pencil|pencils|clicked", "Auto clicks every 10 seconds", 15, 0.1, 0, 0, 1);
-            new Game.Object("Ink", "ink|ink|clicked", "Auto clicks every 5 seconds", 30, 0.2, 0, 0, 2);
+            new Game.Object("Pencil", "Auto clicks every 10 seconds", 15, 2, 0.1, 0, 0, 1);
+            new Game.Object("Ink", "Auto clicks every 5 seconds", 30, 3, 0.2, 0, 0, 2);
             
             Game.ComputeCps = function(base, add, mult, bonus) {
                 if (!bonus) bonus = 0;

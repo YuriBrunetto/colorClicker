@@ -21,6 +21,26 @@
         
         <div class="content-color" id="content-color">
             <div class="cor" id="color">rgb(0, 0, 0)</div>
+            <a href="javascript:;" class="about" id="about" title="About">About</a>
+        </div>
+        
+        <div class="about-wrap">
+            <div class="about-container">
+                <h2>Idea by</h2>
+                <ul>
+                    <li><a href="https://twitter.com/brunettoyuri" target="_blank" title="@brunettoyrui">@brunettoyuri</a></li>
+                    <li><a href="https://twitter.com/adrneas" target="_blank" title="@adrneas">@adrneas</a></li>
+                    <li><a href="https://twitter.com/thaciohahn" target="_blank" title="@thaciohahn">@thaciohahn</a></li>
+                    <li><a href="https://twitter.com/Cesar_Noll" target="_blank" title="@Cesar_Noll">@Cesar_Noll</a></li>
+                </ul>
+                <br>
+                <h2>Developed by</h2>
+                <ul>
+                    <li><a href="https://twitter.com/brunettoyuri" target="_blank" title="@brunettoyrui">@brunettoyuri</a></li>
+                </ul>
+                
+                <a href="javascript:;" title="Close" class="about-close">Close</a>
+            </div>
         </div>
         
         <div class="content-interface">
@@ -32,13 +52,23 @@
             </div>
         </div>
         
-        <div class="store" id="products">
-            <a href="javascript:;"class="store-a"><span class="store-span"></span></a>
-        </div>
-        
-        <footer class="footer">
-            <footer class="footer-wrap"></footer>
-        </footer>
+        <div class="store" id="products"></div>
         
     </body>
+    
+    <script type="text/javascript">
+    
+        $(function(){
+            $("#about").click(function(){
+                $(".about-wrap").addClass("about-wrap-ativo");
+                $(".about-container").addClass("about-container-ativo");
+            });
+            
+            $(".about-close").click(function(){
+                $(".about-wrap").removeClass("about-wrap-ativo");
+                $(".about-container").removeClass("about-container-ativo");
+            });
+        });
+        
+    </script>
 </html>
