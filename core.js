@@ -141,7 +141,7 @@
                     str = str.split("!END!")[0];
                     console.log(str);
                   
-                    if (str != "") {
+                  
 
                         var spl = "";
                         str = str.split("|");
@@ -166,7 +166,7 @@
                             }
                         }
 
-                    }
+                    
                 }
                 
                 Game.recalculateGains = 1;
