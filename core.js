@@ -91,7 +91,6 @@
             Game.SaveGame = function(){
                 var str = "";
                 str += Game.version + "|";
-                str += "|";
                 str += parseInt(Game.startDate) + "|";
                 str += parseFloat(Math.floor(Game.points))+";"+
                     parseFloat(Math.floor(Game.pointsEarned))+";"+
