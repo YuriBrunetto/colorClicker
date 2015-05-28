@@ -125,6 +125,7 @@
                     }
                     
                     if (str != "") {
+                        alert(1);
                         var spl = "";
                         str = str.split("|");
 						Game.startDate = parseInt(spl[0]);
@@ -150,7 +151,6 @@
                 Game.recalculateGains = 1;
 				Game.storeToRebuild = 1;
 				Game.upgradesToRebuild = 1;
-				console.log("Game loaded");
             }
             
             // earn – economics
