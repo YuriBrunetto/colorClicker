@@ -120,9 +120,9 @@
                     var oldstr = str.split("|");
                     str = str.split("!END!")[0];
                     str = b64_to_utf8(str);
+                    console.log(str);
                     
-                    
-                        var spl = "";
+                        /*var spl = "";
                         str = str.split("|");
 						Game.startDate = parseInt(spl[0]);
 						spl = str[2].split(";"); // points
@@ -140,7 +140,7 @@
 								me.bought = 0;
                                 me.totalPoints = 0;
 							}
-						}
+						}*/
                     
                 }
                 
