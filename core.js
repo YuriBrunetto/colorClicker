@@ -85,6 +85,10 @@
             Game.green = 0;
             Game.blue = 0;
             
+            // save stuff
+            Game.SaveTo = "ColorClickerGame";
+            Game.LocalStorage = 1;
+            
             Game.startDate = parseInt(new Date().getTime());
             
             // save
@@ -104,17 +108,35 @@
                     str += me.amount + "," + me.bought + ";";
                 }
                 
-                var now = new Date();
-                now.setFullYear(now.getFullYear() + 5);
-                str = str + "!END!";
-                str = "ColorClickerGame=" + escape(str) + "; expires=" + now.toUTCString() + ";";
-                document.cookie = str;
+                if (Game.LocalStorage) {
+                    str = utf8_to_b64(str) + "!END!";
+                    str = escape(str);
+                    
+                    window.localStorage(Game.SaveTo, str);
+                    // AQUI VAI O IF DE ERROS CASO TENHA
+                } else {
+                    var now = new Date();
+                    now.setFullYear(now.getFullYear() + 5);
+                    str = str + "!END!";
+                    str = "ColorClickerGame=" + escape(str) + "; expires=" + now.toUTCString() + ";";
+                    document.cookie = str;
+                }
             }
             
             // load
             Game.LoadGame = function(){
                 var str = "";
-                if (document.cookie.indexOf("ColorClickerGame") >= 0) str = unescape(document.cookie.split("ColorClickerGame=")[1]); //get cookie here
+                
+                if (Game.LocalStorage) {
+                    var localStorage = window.localStorage.getItem(Game.SaveTo);
+                    if (!localStorage) 
+                        if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
+                    else
+                        str = unescape(localStorage);
+                } else {
+                    if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
+                }
+                
 			
                 if (str != "") {
                    
