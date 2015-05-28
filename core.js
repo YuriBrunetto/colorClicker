@@ -105,7 +105,7 @@
                 
                 var now = new Date();
                 now.setFullYear(now.getFullYear() + 5);
-                str = utf8_to_b64(str) + "!END!";
+                str = str + "!END!";
                 str = "ColorClickerGame=" + escape(str) + "; expires=" + now.toUTCString() + ";";
                 document.cookie = str;
             }
