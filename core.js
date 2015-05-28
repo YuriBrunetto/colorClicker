@@ -126,10 +126,7 @@
                 
                 if (Game.LocalStorage) {
                     var localStorage = window.localStorage.getItem(Game.SaveTo);
-                    if (!localStorage) {
-                        if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
-                        console.log("nao");
-                    } else {
+                    if (localStorage) {
                         str = unescape(localStorage);
                     }
                 } else {
