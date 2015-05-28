@@ -23,6 +23,22 @@
         return str;
     }
     
+    function utf8_to_b64(str) {
+        try {
+            return Base64.encode(unescape(encodeURIComponent(str)));
+        } catch(err) {
+            return "";
+        }
+    }
+    
+    function b64_to_utf8( str ) {
+        try {
+            return decodeURIComponent(escape(Base64.decode(str)));
+        } catch(err) {
+            return "";
+        }
+    }
+    
     function alerta(msg) {
         l("alerta").innerHTML = msg;
         l("alerta").style.opacity = 1;
@@ -68,6 +84,76 @@
             Game.red = 0;
             Game.green = 0;
             Game.blue = 0;
+            
+            // save
+            Game.Save = function(){
+                var str = "";
+                str += Game.version + "|";
+                str += "|";
+                str += parseInt(Game.startDate) + "|";
+                str += parseFloat(Math.floor(Game.points))+";"+
+                    parseFloat(Math.floor(Game.pointsEarned))+";"+
+                    parseInt(Math.floor(Game.pointClicks))+";"+
+                    parseInt(Math.floor(Game.red))+";"+
+                    parseInt(Math.floor(Game.green))+";"+
+                    parseInt(Math.floor(Game.blue))+";"+
+                    parseFloat(Math.floor(Game.pointsReset))+ "|";
+                for (var i in Game.Objects) {
+                    var me = Game.Objects[i];
+                    str += me.amount + "," + me.bought + "," + Math.floor(me.totalPoints) + ";";
+                }
+                
+                var now = new Date();
+                now.setFullYear(now.getFullYear() + 5);
+                str = utf8_to_b64(str) + "!END!";
+                str = "ColorClickerGame=" + escape(str) + "; expires=" + now.toUTCString() + ";";
+                document.cookie = str;
+                
+                if (document.cookie.indexOf("ColorClickerGame") < 0) {}
+                else alert("Saved");
+            }
+            
+            // load
+            Game.Load = function(){
+                var str = "";
+                if (document.cookie.indexOf("ColorClickerGame") >= 0) str = unescape(document.cookie.split("ColorClickerGame=")[1]); //get cookie here
+			
+                if (str != "") {
+                    var version = 0;
+                    var oldstr = str.split("|");
+                    if (oldstr[0] < 1) {}
+                    else {
+                        str = str.split("!END!")[0];
+                        str = b64_to_utf8(str);
+                    }
+                    
+                    if (str != "") {
+                        var spl = "";
+                        str = str.split("|");
+						Game.startDate = parseInt(spl[0]);
+						spl = str[2].split(";"); // points
+						Game.cookies = parseFloat(spl[0]); Game.cookiesEarned = parseFloat(spl[1]);
+						Game.cookieClicks = spl[2] ? parseInt(spl[2]) : 0;
+						spl = str[3].split(";"); // buildings
+						Game.BuildingsOwned = 0;
+                        for (var i in Game.ObjectsById) {
+							var me = Game.ObjectsById[i];
+							if (spl[i]) {
+								var mestr = spl[i].toString().split(",");
+				                me.amount = parseInt(mestr[0]); me.bought = parseInt(mestr[1]); me.totalPoints = parseInt(mestr[2]); 
+								Game.BuildingsOwned+=me.amount;
+							} else {
+								me.bought=0;me.totalPoints=0;
+							}
+						}
+                    }
+                }
+                
+                Game.recalculateGains = 1;
+				Game.storeToRebuild = 1;
+				Game.upgradesToRebuild = 1;
+				console.log("Game loaded");
+            }
             
             // earn – economics
             Game.Earn = function(howmuch){
@@ -266,7 +352,8 @@
                 
             }
             
-            //
+            Game.Load();
+            Game.ready = 1;
             Game.Loop();
         }
         
@@ -297,6 +384,8 @@
             
             if (Game.red == 255 && Game.green == 255 && Game.blue == 255)
                 Game.Win();
+            
+            Game.Save();
         }
 
         // draw
