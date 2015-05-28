@@ -125,18 +125,18 @@
                 var str = "";
                 
                 if (Game.LocalStorage) {
-                    console.log("entrou");
                     var localStorage = window.localStorage.getItem(Game.SaveTo);
-                    if (!localStorage) 
+                    if (!localStorage) {
                         if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
-                    else {
+                        console.log("nao");
+                    } else {
                         str = unescape(localStorage);
                     }
                 } else {
                     if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
                 }
                 
-                if (str != "") {
+               
                     
                     str = str.split("!END!")[0];
                     console.log(str);
@@ -167,7 +167,7 @@
                         }
 
                     
-                }
+                
                 
                 Game.recalculateGains = 1;
 				Game.storeToRebuild = 1;
