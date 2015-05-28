@@ -132,8 +132,8 @@
                         str = str.split("|");
 						Game.startDate = parseInt(spl[0]);
 						spl = str[2].split(";"); // points
-						Game.cookies = parseFloat(spl[0]); Game.cookiesEarned = parseFloat(spl[1]);
-						Game.cookieClicks = spl[2] ? parseInt(spl[2]) : 0;
+						Game.points = parseFloat(spl[0]); Game.pointsEarned = parseFloat(spl[1]);
+						Game.pointClicks = spl[2] ? parseInt(spl[2]) : 0;
 						spl = str[3].split(";"); // buildings
 						Game.BuildingsOwned = 0;
                         for (var i in Game.ObjectsById) {
@@ -141,9 +141,10 @@
 							if (spl[i]) {
 								var mestr = spl[i].toString().split(",");
 				                me.amount = parseInt(mestr[0]); me.bought = parseInt(mestr[1]); me.totalPoints = parseInt(mestr[2]); 
-								Game.BuildingsOwned+=me.amount;
+								Game.BuildingsOwned += me.amount;
 							} else {
-								me.bought=0;me.totalPoints=0;
+								me.bought = 0;
+                                me.totalPoints = 0;
 							}
 						}
                     }
