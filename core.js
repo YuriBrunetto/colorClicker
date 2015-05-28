@@ -85,6 +85,8 @@
             Game.green = 0;
             Game.blue = 0;
             
+            Game.startDate = parseInt(new Date().getTime());
+            
             // save
             Game.SaveGame = function(){
                 var str = "";
@@ -100,7 +102,7 @@
                     parseFloat(Math.floor(Game.pointsReset))+ "|";
                 for (var i in Game.Objects) {
                     var me = Game.Objects[i];
-                    str += me.amount + "," + me.bought + "," + Math.floor(me.totalPoints) + ";";
+                    str += me.amount + "," + me.bought + ";";
                 }
                 
                 var now = new Date();
