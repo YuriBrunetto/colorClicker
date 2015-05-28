@@ -118,11 +118,8 @@
                 if (str != "") {
                     var version = 0;
                     var oldstr = str.split("|");
-                    if (oldstr[0] < 1) {}
-                    else {
-                        str = str.split("!END!")[0];
-                        str = b64_to_utf8(str);
-                    }
+                    str = str.split("!END!")[0];
+                    str = b64_to_utf8(str);
                     
                     if (str != "") {
                         alert(1);
@@ -145,7 +142,7 @@
                                 me.totalPoints = 0;
 							}
 						}
-                    }
+                    } else { alert(1); }
                 }
                 
                 Game.recalculateGains = 1;
