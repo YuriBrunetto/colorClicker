@@ -86,7 +86,7 @@
             Game.blue = 0;
             
             // save
-            Game.Save = function(){
+            Game.SaveGame = function(){
                 var str = "";
                 str += Game.version + "|";
                 str += "|";
@@ -111,7 +111,7 @@
             }
             
             // load
-            Game.Load = function(){
+            Game.LoadGame = function(){
                 var str = "";
                 if (document.cookie.indexOf("ColorClickerGame") >= 0) str = unescape(document.cookie.split("ColorClickerGame=")[1]); //get cookie here
 			
@@ -350,7 +350,7 @@
                 
             }
             
-            Game.Load();
+            Game.LoadGame();
             Game.ready = 1;
             Game.Loop();
         }
@@ -383,7 +383,7 @@
             if (Game.red == 255 && Game.green == 255 && Game.blue == 255)
                 Game.Win();
             
-            Game.Save();
+            Game.SaveGame();
         }
 
         // draw
