@@ -116,7 +116,7 @@
                 if (document.cookie.indexOf("ColorClickerGame") >= 0) str = unescape(document.cookie.split("ColorClickerGame=")[1]); //get cookie here
 			
                 if (str != "") {
-                    str = b64_to_utf8(str);
+                   
                     console.log(str);
                     
                         /*var spl = "";
