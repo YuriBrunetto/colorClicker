@@ -152,7 +152,7 @@
                             var mestr = spl[i].toString().split(",");
                             me.amount = parseInt(mestr[0]);
                             me.bought = parseInt(mestr[1]);
-                            me.price = parseInt(mestr[2]);
+                            me.price = mestr[2];
                             Game.BuildingsOwned += me.amount;
                         } else {
                             me.bought = 0;
