@@ -112,7 +112,7 @@
                     str = utf8_to_b64(str) + "!END!";
                     str = escape(str);
                     
-                    window.localStorage(Game.SaveTo, str);
+                    window.localStorage.setItem(Game.SaveTo, str);
                     // AQUI VAI O IF DE ERROS CASO TENHA
                 } else {
                     var now = new Date();
