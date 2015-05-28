@@ -135,40 +135,31 @@
                 } else {
                     if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
                 }
-                
-               
                     
-                    str = str.split("!END!")[0];
-                    console.log(str);
-                  
-                  
+                str = str.split("!END!")[0];
+                var spl = "";
+                str = str.split("|");
+                Game.startDate = parseInt(spl[0]);
+                spl = str[2].split(";"); // points
+                Game.points = parseFloat(spl[0]); Game.pointsEarned = parseFloat(spl[1]);
+                Game.pointClicks = spl[2] ? parseInt(spl[2]) : 0;
+                Game.red = parseInt(spl[3]);
+                Game.green = parseInt(spl[4]);
+                Game.blue = parseInt(spl[5]);
+                spl = str[3].split(";"); // buildings
+                Game.BuildingsOwned = 0;
+                for (var i in Game.ObjectsById) {
+                    var me = Game.ObjectsById[i];
+                    if (spl[i]) {
+                        var mestr = spl[i].toString().split(",");
+                        me.amount = parseInt(mestr[0]); me.bought = parseInt(mestr[1]); 
+                        Game.BuildingsOwned += me.amount;
+                    } else {
+                        me.bought = 0;
+                        me.totalPoints = 0;
+                    }
+                }
 
-                        var spl = "";
-                        str = str.split("|");
-                        Game.startDate = parseInt(spl[0]);
-                        spl = str[2].split(";"); // points
-                        Game.points = parseFloat(spl[0]); Game.pointsEarned = parseFloat(spl[1]);
-                        Game.pointClicks = spl[2] ? parseInt(spl[2]) : 0;
-                        Game.red = parseInt(spl[3]);
-                        Game.green = parseInt(spl[4]);
-                        Game.blue = parseInt(spl[5]);
-                        spl = str[3].split(";"); // buildings
-                        Game.BuildingsOwned = 0;
-                        for (var i in Game.ObjectsById) {
-                            var me = Game.ObjectsById[i];
-                            if (spl[i]) {
-                                var mestr = spl[i].toString().split(",");
-                                me.amount = parseInt(mestr[0]); me.bought = parseInt(mestr[1]); 
-                                Game.BuildingsOwned += me.amount;
-                            } else {
-                                me.bought = 0;
-                                me.totalPoints = 0;
-                            }
-                        }
-
-                    
-                
-                
                 Game.recalculateGains = 1;
 				Game.storeToRebuild = 1;
 				Game.upgradesToRebuild = 1;
