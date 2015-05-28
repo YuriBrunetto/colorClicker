@@ -102,7 +102,7 @@
                     parseFloat(Math.floor(Game.pointsReset))+ "|";
                 for (var i in Game.Objects) {
                     var me = Game.Objects[i];
-                    str += me.amount + "," + me.bought + ";";
+                    str += me.amount + "," + me.bought + "," + me.price + ";";
                 }
                 
                 if (Game.LocalStorage) {
@@ -150,7 +150,9 @@
                         var me = Game.ObjectsById[i];
                         if (spl[i]) {
                             var mestr = spl[i].toString().split(",");
-                            me.amount = parseInt(mestr[0]); me.bought = parseInt(mestr[1]); 
+                            me.amount = parseInt(mestr[0]);
+                            me.bought = parseInt(mestr[1]);
+                            me.price = parseInt(mestr[2]);
                             Game.BuildingsOwned += me.amount;
                         } else {
                             me.bought = 0;
