@@ -126,6 +126,9 @@
                     spl = str[2].split(";"); // points
                     Game.points = parseFloat(spl[0]); Game.pointsEarned = parseFloat(spl[1]);
                     Game.pointClicks = spl[2] ? parseInt(spl[2]) : 0;
+                    Game.red = parseInt(spl[3]);
+                    Game.green = parseInt(spl[4]);
+                    Game.blue = parseInt(spl[5]);
                     spl = str[3].split(";"); // buildings
                     Game.BuildingsOwned = 0;
                     for (var i in Game.ObjectsById) {
