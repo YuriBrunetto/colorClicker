@@ -108,9 +108,6 @@
                 str = utf8_to_b64(str) + "!END!";
                 str = "ColorClickerGame=" + escape(str) + "; expires=" + now.toUTCString() + ";";
                 document.cookie = str;
-                
-                if (document.cookie.indexOf("ColorClickerGame") < 0) {}
-                else alert("Saved");
             }
             
             // load
