@@ -106,7 +106,7 @@
                 }
                 
                 if (Game.LocalStorage) {
-                    str = utf8_to_b64(str) + "!END!";
+                    str += "!END!";
                     str = escape(str);
                     
                     window.localStorage.setItem(Game.SaveTo, str);
@@ -137,7 +137,7 @@
                 if (str != "") {
                     
                     str = str.split("!END!")[0];
-                    str = b64_to_utf8(str);
+                    
                   
                     if (str != "") {
 
