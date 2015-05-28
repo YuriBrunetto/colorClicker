@@ -121,7 +121,7 @@
                     str = str.split("!END!")[0];
                     str = b64_to_utf8(str);
                     
-                    if (str != "") {
+                    
                         var spl = "";
                         str = str.split("|");
 						Game.startDate = parseInt(spl[0]);
@@ -141,7 +141,7 @@
                                 me.totalPoints = 0;
 							}
 						}
-                    } else { alert(1); }
+                    
                 }
                 
                 Game.recalculateGains = 1;
