@@ -62,7 +62,7 @@
             Game.accumulatedDelay = 0;
             
             Game.Errors = [
-                "More fragments is required!",
+                "More fragments are required!",
                 "You can't afford that, mate.",
                 "Nope.",
                 "Maybe later.",
