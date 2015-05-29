@@ -1,7 +1,7 @@
 (function(){
 
     function l(what) { return document.getElementById(what); }
-    
+
     function Beautify(what, floats) { // turns 9999999 into 9,999,999 – by Orteil => http://orteil.dashnet.org/
         var str = "";
         what = Math.round(what * 100000) / 100000; // get rid of weird rounding errors
@@ -19,48 +19,35 @@
                 str = what[i] + str;
             }
         }
-        
+
         return str;
     }
-    
-    function utf8_to_b64( str ) {
-        try{return Base64.encode(unescape(encodeURIComponent( str )));}
-        catch(err)
-        {return '';}
-    }
 
-    function b64_to_utf8( str ) {
-        try{return decodeURIComponent(escape(Base64.decode( str )));}
-        catch(err)
-        {return '';}
-    }
-
-    
     function alerta(msg) {
         l("alerta").innerHTML = msg;
         l("alerta").style.opacity = 1;
         setTimeout(function(){ l("alerta").style.opacity = 0; }, 3000);
         return false;
     }
-    
+
     Game = {};
-    
+
     Game.Launch = function(){
         Game.ready = 0;
-        
+
         Game.Init = function(){
             Game.ready = 1;
-            
+
             Game.T = 0;
             Game.fps = 30;
-            
+
             Game.version = 0.1;
-            
+
             Game.time = new Date().getTime();
-            
+
             Game.catchupLogic = 0;
             Game.accumulatedDelay = 0;
-            
+
             Game.Errors = [
                 "More fragments are required!",
                 "You can't afford that, mate.",
@@ -68,7 +55,7 @@
                 "Maybe later.",
                 "Are you kidding? Just click the damn button."
             ];
-            
+
             // points and stuff
             Game.pointsEarned = 0;
             Game.pointClicks = 0;
@@ -76,18 +63,18 @@
             Game.pointsd = 0;
             Game.pointsPs = 0;
             Game.pointsReset = 0;
-            
+
             // colors for the bg
             Game.red = 0;
             Game.green = 0;
             Game.blue = 0;
-            
+
             // save stuff
             Game.SaveTo = "ColorClickerGame";
             Game.LocalStorage = 1;
-            
+
             Game.startDate = parseInt(new Date().getTime());
-            
+
             // save
             Game.SaveGame = function(){
                 var str = "";
@@ -104,11 +91,11 @@
                     var me = Game.Objects[i];
                     str += me.amount + "," + me.bought + "," + me.price + ";";
                 }
-                
+
                 if (Game.LocalStorage) {
                     str += "!END!";
                     str = escape(str);
-                    
+
                     window.localStorage.setItem(Game.SaveTo, str);
                     // AQUI VAI O IF DE ERROS CASO TENHA
                 } else {
@@ -119,11 +106,11 @@
                     document.cookie = str;
                 }
             }
-            
+
             // load
             Game.LoadGame = function(){
                 var str = "";
-                
+
                 if (Game.LocalStorage) {
                     var localStorage = window.localStorage.getItem(Game.SaveTo);
                     if (localStorage) {
@@ -132,7 +119,7 @@
                 } else {
                     if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
                 }
-                
+
                 if (str != "") {
                     str = str.split("!END!")[0];
                     var spl = "";
@@ -165,28 +152,22 @@
 				Game.storeToRebuild = 1;
 				Game.upgradesToRebuild = 1;
             }
-            
+
             // earn – economics
             Game.Earn = function(howmuch){
                 Game.points += howmuch;
                 Game.pointsEarned += howmuch;
             }
-            
+
             Game.Spend = function(howmuch){
                 Game.points -= howmuch;
             }
-            
+
             Game.mouseCps = function(){
                 var add = 0;
-                /*if (Game.Has("Pencil fragments")) add += 0.1;
-                if (Game.Has("Pencil"))  add += 0.5;
-                if (Game.Has("Ink")) add += 1;
-                if (Game.Has("Brush")) add += 1.5;
-                if (Game.Has("Paint-brush")) add += 2;*/
-                
                 return Game.ComputeCps(1, 0, 0, add);
             }
-            
+
             Game.computedMouseCps = 1;
             Game.globalCpsMult = 1;
             Game.lastClick = 0;
@@ -199,32 +180,32 @@
                         Game.autoclickerDetected += Game.fps;
                         if (Game.autoclickerDetected >= Game.fps*5) console.log("King!");
                     }
-                    
+
                     Game.Earn(Game.computedMouseCps);
                     Game.pointClicks++;
                 }
-                
+
                 Game.lastClick = new Date().getTime();
             }
             l("clicker").onclick = Game.ClickPoint; // The broken mouse convention! +1
-            
+
             // cps
             Game.recalculateGains = 1;
             Game.CalculateGains = function(){
                 Game.pointsPs = 0;
-                
+
                 for (var i in Game.Objects) {
                     var me = Game.Objects[i];
                     me.storedCps = (typeof(me.cps) == "function" ? me.cps() : me.cps);
                     me.storedTotalCps = me.amount * me.storedCps;
                     Game.pointsPs += me.storedTotalCps;
                 }
-                
+
                 Game.pointsPs *= Game.globalCpsMult;
                 Game.computedMouseCps = Game.mouseCps();
                 Game.recalculateGains = 0;
             }
-            
+
             Game.RebuildStore = function() { // redraw the store from scratch
                 var str = "";
                 for (var i in Game.Objects) {
@@ -232,11 +213,11 @@
 
                     str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments</span></div>";
                 }
-                
+
                 l('products').innerHTML = str;
                 Game.storeToRebuild = 0;
             }
-            
+
             // upgrades
             Game.upgradesToRebuild = 1;
             Game.Upgrades = [];
@@ -259,11 +240,11 @@
                 if (type) this.type = type;
                 this.power = 0;
                 if (power) this.power = power;
-                
+
                 this.buy = function() {
                     var cancelPurchase = 0;
                     if (this.clickFunction) cancelPurchase = !this.clickFunction();
-                    
+
                     if (!cancelPurchase) {
                         var price = this.price;
                         if (Game.points > price && !this.bought) {
@@ -272,21 +253,21 @@
                             if (this.buyFunction) this.buyFunction();
                             Game.upgradesToRebuild = 1;
                             Game.recalculateGains = 1;
-                            Game.UpgradesOwn++; 
+                            Game.UpgradesOwn++;
                         }
                     }
                 }
-                
+
                 Game.Upgrades[this.name] = this;
                 Game.UpgradesById[this.id] = this;
                 Game.UpgradesN++;
                 return this;
             }
-            
+
             Game.Has = function(what) {
                 return (Game.Objects[what] ? Game.Objects[what].bought : 0);
             }
-            
+
             // things
             Game.storeToRebuild = 1;
             Game.Objects = [];
@@ -305,14 +286,14 @@
                 this.red = red;
                 this.green = green;
                 this.blue = blue;
-                
+
                 this.amount = 0;
                 this.bought = 0;
-                
+
                 this.buy = function(){
                     var price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
 
-                    if (Game.points > price) {
+                    if (Game.points >= price) {
                         Game.Spend(price);
                         this.amount++;
                         this.bought++;
@@ -332,7 +313,7 @@
                 this.sell = function(){
                     var price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
                     price = Math.floor(price*0.5);
-                    
+
                     if (this.amount > 0) {
                         Game.points += price;
                         this.amount--;
@@ -342,33 +323,33 @@
                         Game.ThingsOwned--;
                     }
                 }
-                
+
                 Game.Objects[this.name] = this;
                 Game.ObjectsById[this.id] = this;
                 Game.ObjectsN++;
                 return this;
             }
-            
+
             new Game.Object("Pencil", "Auto clicks every 10 seconds", 15, 2, 0.1, 0, 0, 1);
             new Game.Object("Ink", "Auto clicks every 5 seconds", 30, 3, 0.2, 0, 0, 2);
-            
+
             Game.ComputeCps = function(base, add, mult, bonus) {
                 if (!bonus) bonus = 0;
                 return ((base + add) * (Math.pow(2, mult)) + bonus);
             }
-            
+
             // win
-            
+
             Game.Win = function(){
-                
+
             }
-            
+
             Game.LoadGame();
             Game.ready = 1;
             Game.Loop();
         }
-        
-        // lógica  
+
+        // lógica
         Game.Logic = function(){
             Game.Earn(Game.pointsPs / Game.fps);
 
@@ -378,24 +359,24 @@
             }
 
             Game.pointsd += (Game.points - Game.pointsd) * 0.3;
-            
+
             if (Game.recalculateGains) Game.CalculateGains();
             Game.Earn(Game.pointsPs / Game.fps);
 
             if (Game.storeToRebuild) Game.RebuildStore();
-            
+
             if (Game.red >= 255)
                 Game.red = 255;
-            
+
             if (Game.green >= 255)
                 Game.green = 255;
 
             if (Game.blue >= 255)
                 Game.blue = 255;
-            
+
             if (Game.red == 255 && Game.green == 255 && Game.blue == 255)
                 Game.Win();
-            
+
             Game.SaveGame();
         }
 
@@ -407,20 +388,20 @@
             // updates the points
             l("counter").innerHTML = Beautify(Math.round(Game.points)) + unit;
             l("per-second").innerHTML = Beautify(Game.pointsPs, 1) + " per second";
-            
-            // updates the bg color 
+
+            // updates the bg color
             l("color").innerHTML = "rgb(" + Game.red + ", " + Game.green + ", " + Game.blue + ")";
             l("content-color").style.backgroundColor = "rgba(" + Game.red + ", " + Game.green + ", " + Game.blue + ", 1)";
-            
+
             document.title = Beautify(Game.points) + " " + (Game.points == 1 ? "fragment":"fragments") + " - colorClicker";
         }
-        
+
         // da loop!
         Game.Loop = function(){
             Game.catchupLogic = 0;
             Game.Logic();
             Game.catchupLogic = 1;
-                
+
             //latency compensator
             Game.accumulatedDelay += ((new Date().getTime() - Game.time) - 1000 / Game.fps);
             Game.accumulatedDelay = Math.min(Game.accumulatedDelay, 1000 * 5);
@@ -436,12 +417,12 @@
             setTimeout(Game.Loop, 1000 / Game.fps);
         }
     }
-    
+
     // seja que zeus quiser
     Game.Launch();
-    
+
     window.onload = function() {
-        if (!Game.ready) Game.Init();  
+        if (!Game.ready) Game.Init();
     };
-    
+
 })();
