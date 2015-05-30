@@ -30,7 +30,7 @@ li { line-height:20px; }
 .frag-per-second { font-size:10px; margin-top:2px; text-align:center; color:#aaa; }
 
 .store { width:20%; float:right; background-color:#fff; }
-.store-a { display:block; height:15px; padding:24px 8px; line-height:15px; text-align:center; color:cadetblue; text-decoration:none; cursor:pointer;
+.store-a { display:block; padding:24px 8px; line-height:15px; text-align:center; color:cadetblue; text-decoration:none; cursor:pointer;
     border-bottom:1px solid #fff; position:relative; transition:400ms opacity; }
 .store-a:hover { opacity:0.7; }
 .store-span { color:#aaa; font-size:12px; }

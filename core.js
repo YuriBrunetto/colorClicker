@@ -211,7 +211,7 @@
                 for (var i in Game.Objects) {
                     var me = Game.Objects[i];
 
-                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments</span></div>";
+                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='" + me.id + "' title='" + me.name + "'>" + me.name + "<br> <span class='store-span'>Cost: " + Beautify(me.price) + " fragments<br>Amount: " + me.amount + "</span></div>";
                 }
 
                 l('products').innerHTML = str;
@@ -330,8 +330,9 @@
                 return this;
             }
 
-            new Game.Object("Pencil", "Auto clicks every 10 seconds", 15, 2, 0.1, 0, 0, 1);
-            new Game.Object("Ink", "Auto clicks every 5 seconds", 30, 3, 0.2, 0, 0, 2);
+            new Game.Object("Pencil", "Gives +0.1 fragments per second.", 15, 2, 0.1, 0, 0, 1);
+            new Game.Object("Ink", "Gives +0.2 fragments per second.", 30, 3, 0.2, 0, 0, 2);
+            new Game.Object("Paint Brush", "Gives +0.3 fragments per second.", 50, 4, 0.3, 0, 1, 1);
 
             Game.ComputeCps = function(base, add, mult, bonus) {
                 if (!bonus) bonus = 0;
