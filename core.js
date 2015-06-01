@@ -211,7 +211,7 @@
                 for (var i in Game.Objects) {
                     var me = Game.Objects[i];
 
-                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='" + me.id + "' title='" + me.name + "'>" + me.name + "<br> <span class='store-span'>Cost: " + Beautify(me.price) + " fragments<br>Amount: " + me.amount + "</span></div>";
+                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments</span></div>";
                 }
 
                 l('products').innerHTML = str;
@@ -345,7 +345,7 @@
 
             }
 
-            Game.LoadGame();
+            // Game.LoadGame();
             Game.ready = 1;
             Game.Loop();
         }
