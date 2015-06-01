@@ -6,7 +6,7 @@ a { text-decoration:none; color:#444; }
 ul { margin:8px 0 0 26px; color:#666; }
 li { line-height:20px; }
 
-@media all and (max-width:500px) {
+@media all and (max-width:900px) {
     .content-interface { width:100% !important; }
     .store { width:100% !important; }
 }
