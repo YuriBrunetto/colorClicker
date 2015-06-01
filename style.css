@@ -31,7 +31,7 @@ li { line-height:20px; }
 
 .store { width:30%; float:right; background-color:#192332; }
 .store-a { line-height:20px; display:block; padding:20px; color:#fff; font-weight:500; cursor:pointer; margin-top:1px;
-    border-left:6px solid #1ebb94; background-color:#111926; }
+    border-left:6px solid #b82d51; background-color:#111926; transition:600ms all; }
 .store-a:hover { opacity:0.7; }
 .store-span { color:#aaa; font-size:12px; font-weight:300; }
 .store-desc { font-weight:300; font-size:12px; line-height:14px; }

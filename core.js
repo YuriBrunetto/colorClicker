@@ -206,12 +206,12 @@
                 Game.recalculateGains = 0;
             }
 
-            Game.RebuildStore = function() { // redraw the store from scratch
+            Game.RebuildStore = function() {
                 var str = "";
                 for (var i in Game.Objects) {
-                    var me = Game.Objects[i];
-
-                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments</span><div class='clear-both'></div><div class='store-desc'>" + me.desc + "</div></div>";
+                    var me = Game.Objects[i];                
+                    
+                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='object-" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments</span><div class='clear-both'></div><div class='store-desc'>" + me.desc + "</div></div>";
                 }
 
                 l('products').innerHTML = str;
@@ -332,21 +332,20 @@
 
             // name, desc, price, increase, cps, red, green, blue
             new Game.Object("Pencil", "Gives to you 1 point of blue and 0.1 fragments per second.", 50, 2, 0.1, 0, 0, 1);
-            new Game.Object("Ink", "Gives to you 2 points of blue and 0.1 fragments per second.", 150, 3, 0.1, 0, 0, 2);
+            new Game.Object("Ink", "Gives to you 2 points of blue and 0.1 fragments per second.", 250, 3, 0.1, 0, 0, 2);
             new Game.Object("Paint Brush", "Gives to you 1 point of green and 0.2 fragments per second.", 450, 4, 0.2, 0, 1, 0);
 
             Game.ComputeCps = function(base, add, mult, bonus) {
                 if (!bonus) bonus = 0;
                 return ((base + add) * (Math.pow(2, mult)) + bonus);
             }
-
+            
             // win
-
             Game.Win = function(){
 
             }
 
-            // Game.LoadGame();
+            Game.LoadGame();
             Game.ready = 1;
             Game.Loop();
         }
@@ -365,7 +364,8 @@
             if (Game.recalculateGains) Game.CalculateGains();
             Game.Earn(Game.pointsPs / Game.fps);
 
-            if (Game.storeToRebuild) Game.RebuildStore();
+            if (Game.storeToRebuild) 
+                Game.RebuildStore();
 
             if (Game.red >= 255)
                 Game.red = 255;
