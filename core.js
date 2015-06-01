@@ -345,7 +345,7 @@
 
             }
 
-            Game.LoadGame();
+            //Game.LoadGame();
             Game.ready = 1;
             Game.Loop();
         }
