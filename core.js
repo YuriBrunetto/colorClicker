@@ -211,7 +211,7 @@
                 for (var i in Game.Objects) {
                     var me = Game.Objects[i];                
                     
-                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='object-" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments</span><div class='clear-both'></div><div class='store-desc'>" + me.desc + "</div></div>";
+                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='object-" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments | " + me.amount + " purchased</span><div class='clear-both'></div><div class='store-desc'>" + me.desc + "</div></div>";
                 }
 
                 l('products').innerHTML = str;
@@ -219,7 +219,7 @@
             }
 
             // upgrades
-            Game.upgradesToRebuild = 1;
+            /*Game.upgradesToRebuild = 1;
             Game.Upgrades = [];
             Game.UpgradesById = [];
             Game.UpgradesN = 0;
@@ -262,7 +262,7 @@
                 Game.UpgradesById[this.id] = this;
                 Game.UpgradesN++;
                 return this;
-            }
+            }*/
 
             Game.Has = function(what) {
                 return (Game.Objects[what] ? Game.Objects[what].bought : 0);
@@ -334,6 +334,8 @@
             new Game.Object("Pencil", "Gives to you 1 point of blue and 0.1 fragments per second.", 50, 2, 0.1, 0, 0, 1);
             new Game.Object("Ink", "Gives to you 2 points of blue and 0.1 fragments per second.", 250, 3, 0.1, 0, 0, 2);
             new Game.Object("Paint Brush", "Gives to you 1 point of green and 0.2 fragments per second.", 450, 4, 0.2, 0, 1, 0);
+            new Game.Object("Master Brush", "Gives to you 2 points of green, 1 point of blue and 0.2 fragments per second.", 1000, 5, 0.3, 0, 2, 1);
+            new Game.Object("Little Brush", "Gives to you 2 points of green, 1 point of blue and 0.2 fragments per second.", 1000, 5, 0.3, 0, 2, 1);
 
             Game.ComputeCps = function(base, add, mult, bonus) {
                 if (!bonus) bonus = 0;

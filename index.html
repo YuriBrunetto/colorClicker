@@ -52,11 +52,21 @@
                 <div class="counter" id="counter"></div>
                 <div class="frag-per-second" id="per-second"></div>
             </div>
+
+            <div class="achievements">
+                Achievement unlocked - <span style="font-weight:500;">Wow! What a clicker!</span><br>
+                <span class="achievements-span">You've clicked a lot and a lot! I'll give you a cookie.</span>
+            </div>
+
+            <div class="clear-both"></div>
         </div>
         
         <div class="store">
-            <h2 style="color:#fff; padding:20px; background-color:#111926;">Store</h2>
-            <div id="products"></div>
+            <div class="store-wrap">
+                <h2 style="color:#fff; padding:20px; background-color:#111926;">Store</h2>
+
+                <div id="products"></div>
+            </div>
         </div>
         
     </body>
@@ -69,10 +79,27 @@
                 $(".about-container").addClass("about-container-ativo");
             });
             
-            $(".about-close").click(function(){
+            $(".about-close", ".about-wrap").click(function(){
                 $(".about-wrap").removeClass("about-wrap-ativo");
                 $(".about-container").removeClass("about-container-ativo");
             });
+
+            //
+            var window_height = 0,
+                content_interface_height = 0,
+                store_height = 0;
+
+            $fn_resize = (function(){
+                window_height = $(".content-color").outerHeight();
+                content_interface_height = window_height;
+                store_height = $(".content-interface").height();
+
+                $(".content-interface").outerHeight(content_interface_height);
+                $(".store-wrap").height(store_height);
+            });
+
+            $(window).resize(function(){ $fn_resize(); });
+            $fn_resize();
         });
         
     </script>
