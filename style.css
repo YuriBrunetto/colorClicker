@@ -51,12 +51,10 @@ li { line-height:20px; }
 .store-wrap::-webkit-scrollbar-track { background-color:none; }
 .store-wrap::-webkit-scrollbar { width:8px !important; }
 .store-wrap::-webkit-scrollbar-thumb { background-color:rgba(255,255,255,0.1); }
-.store-wrap::-moz-scrollbar-track { background-color:none; }
-.store-wrap::-moz-scrollbar { width:8px !important; }
-.store-wrap::-moz-scrollbar-thumb { background-color:rgba(255,255,255,0.1); }
-.store-wrap::scrollbar-track { background-color:none; }
-.store-wrap::scrollbar { width:8px !important; }
-.store-wrap::scrollbar-thumb { background-color:rgba(255,255,255,0.1); }
+
+.store-wrap::scrollbar-track { -moz-appearance:none !important; background-color:none; }
+.store-wrap::scrollbar { -moz-appearance:none !important; width:8px !important; }
+.store-wrap::scrollbar-thumb { -moz-appearance:none !important; background-color:rgba(255,255,255,0.1); }
 
 .store-a { line-height:20px; display:block; padding:20px; color:#fff; font-weight:500; cursor:pointer; margin-top:1px;
     border-left:6px solid #b82d51; background-color:#111926; transition:600ms all; }
