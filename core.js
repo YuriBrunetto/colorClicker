@@ -78,9 +78,9 @@
             // save
             Game.SaveGame = function(){
                 var str = "";
-                str += Game.version + "|";
-                str += parseInt(Game.startDate) + "|";
-                str += parseFloat(Math.floor(Game.points))+";"+
+                    str += Game.version + "|";
+                    str += parseInt(Game.startDate) + "|";
+                    str += parseFloat(Math.floor(Game.points))+";"+
                     parseFloat(Math.floor(Game.pointsEarned))+";"+
                     parseInt(Math.floor(Game.pointClicks))+";"+
                     parseInt(Math.floor(Game.red))+";"+
@@ -276,19 +276,19 @@
             Game.ObjectsN = 0;
             Game.ThingsOwned = 0;
             Game.Object = function(name, desc, price, increase, cps, red, green, blue){
-                this.id = Game.ObjectsN;
-                this.name = name;
-                this.desc = desc;
+                this.id        = Game.ObjectsN;
+                this.name      = name;
+                this.desc      = desc;
                 this.basePrice = price;
-                this.price = this.basePrice;
-                this.increase = increase;
-                this.cps = cps;
-                this.red = red;
-                this.green = green;
-                this.blue = blue;
-
-                this.amount = 0;
-                this.bought = 0;
+                this.price     = this.basePrice;
+                this.increase  = increase;
+                this.cps       = cps;
+                this.red       = red;
+                this.green     = green;
+                this.blue      = blue;
+                
+                this.amount    = 0;
+                this.bought    = 0;
 
                 this.buy = function(){
                     var price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);

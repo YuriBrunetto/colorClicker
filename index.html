@@ -1,6 +1,6 @@
-<html>
+<!doctype html>
     <head>
-        
+        <meta charset="utf-8">
         <title>colorClicker</title>
         
         <link type="image/x-icon" rel="apple-touch-icon" href="img/colorclicker.png">
@@ -57,8 +57,6 @@
                 Achievement unlocked - <span style="font-weight:500;">Wow! What a clicker!</span><br>
                 <span class="achievements-span">You've clicked a lot and a lot! I'll give you a cookie.</span>
             </div>
-
-            <div class="clear-both"></div>
         </div>
         
         <div class="store">
@@ -90,12 +88,12 @@
                 store_height = 0;
 
             $fn_resize = (function(){
-                window_height = $(".content-color").outerHeight();
+                window_height = $(window).height() / 2;
                 content_interface_height = window_height;
-                store_height = $(".content-interface").height();
 
-                $(".content-interface").outerHeight(content_interface_height);
-                $(".store-wrap").height(store_height);
+                $(".content-color").height(window_height);
+                $(".content-interface").height(content_interface_height);
+                $(".store-wrap").height(window_height);
             });
 
             $(window).resize(function(){ $fn_resize(); });
