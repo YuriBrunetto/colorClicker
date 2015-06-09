@@ -97,7 +97,6 @@
                     str = escape(str);
 
                     window.localStorage.setItem(Game.SaveTo, str);
-                    // AQUI VAI O IF DE ERROS CASO TENHA
                 } else {
                     var now = new Date();
                     now.setFullYear(now.getFullYear() + 5);
@@ -113,12 +112,12 @@
 
                 if (Game.LocalStorage) {
                     var localStorage = window.localStorage.getItem(Game.SaveTo);
-                    if (localStorage) {
+                    if (localStorage)
                         str = unescape(localStorage);
-                    }
-                } else {
+                    //else 
+                    //    Game.NewPlayer("Welcome, stranger!");
+                } else
                     if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
-                }
 
                 if (str != "") {
                     str = str.split("!END!")[0];
@@ -211,7 +210,7 @@
                 for (var i in Game.Objects) {
                     var me = Game.Objects[i];                
                     
-                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='object-" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments | " + me.amount + " purchased</span><div class='clear-both'></div><div class='store-desc'>" + me.desc + "</div></div>";
+                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='object-" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments, | " + me.amount + " purchased</span><div class='clear-both'></div><div class='store-desc'>" + me.desc + "</div></div>";
                 }
 
                 l('products').innerHTML = str;
@@ -275,7 +274,7 @@
             Game.ObjectsById = [];
             Game.ObjectsN = 0;
             Game.ThingsOwned = 0;
-            Game.Object = function(name, desc, price, increase, cps, red, green, blue){
+            Game.Object = function(name, desc, price, increase, cps, red, green, blue, costR, costG, costB){
                 this.id        = Game.ObjectsN;
                 this.name      = name;
                 this.desc      = desc;
@@ -286,6 +285,9 @@
                 this.red       = red;
                 this.green     = green;
                 this.blue      = blue;
+                this.costR     = costR;
+                this.costG     = costG;
+                this.costB     = costB;
                 
                 this.amount    = 0;
                 this.bought    = 0;
@@ -297,30 +299,23 @@
                         Game.Spend(price);
                         this.amount++;
                         this.bought++;
-                        price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
-                        this.price = price;
-                        Game.red += this.red;
+                        price       = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
+                        this.price  = price;
+                        
+                        Game.red   += this.red;
                         Game.green += this.green;
-                        Game.blue += this.blue;
+                        Game.blue  += this.blue;
+                        
+                        Game.red   -= this.costR;
+                        Game.green -= this.costG;
+                        Game.blue  -= this.costB;
+
                         Game.recalculateGains = 1;
                         Game.ThingsOwned++;
                         Game.RebuildStore();
                     } else {
                         var randomError = Math.floor(Math.random() * Game.Errors.length);
                         alerta(Game.Errors[randomError]);
-                    }
-                }
-                this.sell = function(){
-                    var price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
-                    price = Math.floor(price*0.5);
-
-                    if (this.amount > 0) {
-                        Game.points += price;
-                        this.amount--;
-                        price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
-                        this.price = price;
-                        Game.recalculateGains = 1;
-                        Game.ThingsOwned--;
                     }
                 }
 
@@ -330,12 +325,12 @@
                 return this;
             }
 
-            // name, desc, price, increase, cps, red, green, blue
+            // name, desc, price, increase, cps, red, green, blue, costR, costG, costB
             new Game.Object("Pencil", "Gives to you 1 point of blue and 0.1 fragments per second.", 50, 2, 0.1, 0, 0, 1);
             new Game.Object("Ink", "Gives to you 2 points of blue and 0.1 fragments per second.", 250, 3, 0.1, 0, 0, 2);
-            new Game.Object("Paint Brush", "Gives to you 1 point of green and 0.2 fragments per second.", 450, 4, 0.2, 0, 1, 0);
-            new Game.Object("Master Brush", "Gives to you 2 points of green, 1 point of blue and 0.2 fragments per second.", 1000, 5, 0.3, 0, 2, 1);
-            new Game.Object("Little Brush", "Gives to you 2 points of green, 1 point of blue and 0.2 fragments per second.", 1000, 5, 0.3, 0, 2, 1);
+            new Game.Object("Paint Brush", "Gives to you 1 point of green and 0.1 fragments per second.", 450, 4, 0.1, 0, 1, 0);
+            new Game.Object("Master Brush", "Gives to you 2 points of green, 1 point of blue and 0.2 fragments per second.", 1000, 5, 0.2, 0, 2, 1);
+            new Game.Object("Spray", "Gives to you 5 points of green, 2 points of blue and 0.4 fragments per second.", 2500, 6, 0.4, 0, 5, 2, 0, 0, 1);
 
             Game.ComputeCps = function(base, add, mult, bonus) {
                 if (!bonus) bonus = 0;
@@ -344,6 +339,10 @@
             
             // win
             Game.Win = function(){
+
+            }
+
+            Game.NewPlayer = function(){
 
             }
 
