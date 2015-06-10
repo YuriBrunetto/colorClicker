@@ -120,17 +120,17 @@
                     if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
 
                 if (str != "") {
-                    str = str.split("!END!")[0];
-                    var spl = "";
-                    str = str.split("|");
-                    Game.startDate = parseInt(spl[0]);
-                    spl = str[2].split(";"); // points
-                    Game.points = parseFloat(spl[0]); Game.pointsEarned = parseFloat(spl[1]);
-                    Game.pointClicks = spl[2] ? parseInt(spl[2]) : 0;
-                    Game.red = parseInt(spl[3]);
-                    Game.green = parseInt(spl[4]);
-                    Game.blue = parseInt(spl[5]);
-                    spl = str[3].split(";"); // buildings
+                    str                 = str.split("!END!")[0];
+                    var spl             = "";
+                    str                 = str.split("|");
+                    Game.startDate      = parseInt(spl[0]);
+                    spl                 = str[2].split(";"); // points
+                    Game.points         = parseFloat(spl[0]); Game.pointsEarned = parseFloat(spl[1]);
+                    Game.pointClicks    = spl[2] ? parseInt(spl[2]) : 0;
+                    Game.red            = parseInt(spl[3]);
+                    Game.green          = parseInt(spl[4]);
+                    Game.blue           = parseInt(spl[5]);
+                    spl                 = str[3].split(";"); // buildings
                     Game.BuildingsOwned = 0;
                     for (var i in Game.ObjectsById) {
                         var me = Game.ObjectsById[i];
@@ -274,7 +274,7 @@
             Game.ObjectsById = [];
             Game.ObjectsN = 0;
             Game.ThingsOwned = 0;
-            Game.Object = function(name, desc, price, increase, cps, red, green, blue, costR, costG, costB){
+            Game.Object = function(name, desc, price, increase, cps, red, green, blue){
                 this.id        = Game.ObjectsN;
                 this.name      = name;
                 this.desc      = desc;
@@ -285,9 +285,6 @@
                 this.red       = red;
                 this.green     = green;
                 this.blue      = blue;
-                this.costR     = costR;
-                this.costG     = costG;
-                this.costB     = costB;
                 
                 this.amount    = 0;
                 this.bought    = 0;
@@ -305,10 +302,6 @@
                         Game.red   += this.red;
                         Game.green += this.green;
                         Game.blue  += this.blue;
-                        
-                        Game.red   -= this.costR;
-                        Game.green -= this.costG;
-                        Game.blue  -= this.costB;
 
                         Game.recalculateGains = 1;
                         Game.ThingsOwned++;
@@ -330,7 +323,7 @@
             new Game.Object("Ink", "Gives to you 2 points of blue and 0.1 fragments per second.", 250, 3, 0.1, 0, 0, 2);
             new Game.Object("Paint Brush", "Gives to you 1 point of green and 0.1 fragments per second.", 450, 4, 0.1, 0, 1, 0);
             new Game.Object("Master Brush", "Gives to you 2 points of green, 1 point of blue and 0.2 fragments per second.", 1000, 5, 0.2, 0, 2, 1);
-            new Game.Object("Spray", "Gives to you 5 points of green, 2 points of blue and 0.4 fragments per second.", 2500, 6, 0.4, 0, 5, 2, 0, 0, 1);
+            new Game.Object("Spray", "Gives to you 5 points of green, 2 points of blue and 0.4 fragments per second.", 2500, 6, 0.4, 0, 5, 2);
 
             Game.ComputeCps = function(base, add, mult, bonus) {
                 if (!bonus) bonus = 0;

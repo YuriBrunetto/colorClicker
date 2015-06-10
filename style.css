@@ -1,6 +1,5 @@
 * { margin:0; padding:0; }
 body { font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; color:#333; }
-strong { color:#999; }
 h2 { color:#333; font-size:24px; }
 a { text-decoration:none; color:#444; }
 ul { margin:8px 0 0 26px; color:#666; }
@@ -10,6 +9,15 @@ li { line-height:20px; }
     .content-interface { width:100% !important; }
     .store { width:100% !important; }
 }
+
+/* ----- New game ----- */
+.new-game { width:100%; height:100%; position:fixed; left:0; top:0; background-color:#2c3e50; z-index:3000; }
+.new-game-text { color:#fff; font-size:48px; font-weight:300; text-align:center; -webkit-animation:text-in 1s; margin-top:100px; }
+.new-game-p { display:block; width:600px; text-align:center; margin:50px auto; color:#fff; font-weight:300; -webkit-animation:text-in2 1s;
+    -webkit-animation-delay:1s; }
+
+@-webkit-keyframes text-in { 0% { opacity:0; margin-top:0; } 100% { opacity:1; margin-top:100px; } }
+@-webkit-keyframes text-in2 { 0% { opacity:0; margin:0 auto; } 100% { opacity:1; margin:50px auto; } }
 
 /* ----- Content (parte de cima) ----- */
 .content-color { width:100%; height:50%; min-height:340px; float:left; position:relative; }
