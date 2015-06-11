@@ -20,12 +20,14 @@
         <!-- analytics -->
         
         <div class="new-game">
-            <div class="new-game-text">Welcome to <span style="font-weight:400">colorClicker</span></div>
+            <div class="new-game-text">Welcome to <span style="font-weight:400">colorClicker</span>!</div>
 
             <div class="new-game-p">
                 The meaning of this game is to reach the white color! You start with the rgb(0, 0, 0), and the objective is to reach 
                 rgb(255, 255, 255), by buying items that gives to you fragments per second.
             </div>
+
+            <a href="javascript:;" class="play-the-game" id="play-the-game" title="Play the game!">Play the game!</a>
         </div>
 
         <div class="content-color" id="content-color">
@@ -107,6 +109,13 @@
 
             $(window).resize(function(){ $fn_resize(); });
             $fn_resize();
+
+            //
+
+            $("#play-the-game").click(function(){
+                $(".new-game").addClass("new-game-disabled");
+                setTimeout(function(){ $(".new-game").css("z-index", "-300"); }, 500);
+            });
         });
         
     </script>
