@@ -75,6 +75,28 @@
 
             Game.startDate = parseInt(new Date().getTime());
 
+            var inactivityTime = function () {
+                var t;
+                window.onload        = resetTimer;
+                document.onmousemove = resetTimer;
+                window.onmousedown   = resetTimer; // catches touchscreen presses
+                window.onclick       = resetTimer; // catches touchpad clicks
+                window.onscroll      = resetTimer; // catches scrolling with arrow keys
+                document.onkeypress  = resetTimer;
+
+                function minusPoints() {
+                    Game.points = 0;
+                    console.log("entrou");
+                }
+
+                function resetTimer() {
+                    clearTimeout(t);
+                    t = setTimeout(minusPoints, 3000);
+                }
+            }
+
+            inactivityTime();
+
             // save
             Game.SaveGame = function(){
                 var str = "";
