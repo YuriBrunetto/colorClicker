@@ -70,7 +70,7 @@
             Game.blue = 0;
 
             // save stuff
-            Game.SaveTo = "ColorClickerGame";
+            Game.SaveTo = "TheColorClicker";
             Game.LocalStorage = 1;
 
             Game.startDate = parseInt(new Date().getTime());
@@ -136,8 +136,8 @@
                     var localStorage = window.localStorage.getItem(Game.SaveTo);
                     if (localStorage)
                         str = unescape(localStorage);
-                    //else 
-                    //    Game.NewPlayer("Welcome, stranger!");
+                    else 
+                        l("new-game").style.display = "block";
                 } else
                     if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
 
@@ -351,17 +351,8 @@
                 if (!bonus) bonus = 0;
                 return ((base + add) * (Math.pow(2, mult)) + bonus);
             }
-            
-            // win
-            Game.Win = function(){
 
-            }
-
-            Game.NewPlayer = function(){
-
-            }
-
-            //Game.LoadGame();
+            Game.LoadGame();
             Game.ready = 1;
             Game.Loop();
         }
