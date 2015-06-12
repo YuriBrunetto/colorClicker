@@ -75,7 +75,8 @@
 
             Game.startDate = parseInt(new Date().getTime());
 
-            var inactivityTime = function () {
+            // Penalidade se ficar muito tempo fora
+            Game.inactivityTime = function () {
                 var t;
                 window.onload        = resetTimer;
                 document.onmousemove = resetTimer;
@@ -85,8 +86,8 @@
                 document.onkeypress  = resetTimer;
 
                 function minusPoints() {
-                    Game.points = 0;
-                    console.log("entrou");
+                    //Game.points -= Game.points / 2;
+                    //console.log("entrou");
                 }
 
                 function resetTimer() {
@@ -95,7 +96,7 @@
                 }
             }
 
-            inactivityTime();
+            Game.inactivityTime();
 
             // save
             Game.SaveGame = function(){
