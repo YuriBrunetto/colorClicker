@@ -347,13 +347,14 @@
             new Game.Object("Paint Brush", "Gives to you 1 point of green and 0.1 fragments per second.", 450, 4, 0.1, 0, 1, 0);
             new Game.Object("Master Brush", "Gives to you 2 points of green, 1 point of blue and 0.2 fragments per second.", 1000, 5, 0.2, 0, 2, 1);
             new Game.Object("Spray", "Gives to you 5 points of green, 2 points of blue and 0.4 fragments per second.", 2500, 6, 0.4, 0, 5, 2);
+            new Game.Object("Red Brush", "Gives to you 2 points of red and 0.4 fragments per second.", 3000, 7, 0.4, 1, 0, 0);
 
             Game.ComputeCps = function(base, add, mult, bonus) {
                 if (!bonus) bonus = 0;
                 return ((base + add) * (Math.pow(2, mult)) + bonus);
             }
 
-            Game.LoadGame();
+            //Game.LoadGame();
             Game.ready = 1;
             Game.Loop();
         }
