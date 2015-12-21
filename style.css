@@ -5,12 +5,8 @@ a { text-decoration:none; color:#444; }
 ul { margin:8px 0 0 26px; color:#666; }
 li { line-height:20px; }
 
-@media all and (max-width:900px) {
-    .content-interface { width:100% !important; }
-    .store { width:100% !important; }
-}
-
 /* ----- New game ----- */
+
 .new-game { width:100%; height:100%; position:fixed; left:0; top:0; background-color:#2c3e50; z-index:3000;
     -webkit-animation:background-change 40s infinite; -moz-animation:background-change 40s infinite; animation:background-change 40s infinite;
     transition:500ms opacity; display:none; }
@@ -38,7 +34,7 @@ li { line-height:20px; }
 @keyframes text-in { 0% { opacity:0; top:0; } 100% { opacity:1; top:100px; } }
 
 .new-game-p { display:block; width:800px; text-align:center; position:absolute; left:50%; top:180px; margin-left:-400px; color:#fff;
-    -webkit-animation:text-in2 2s; -moz-animation:text-in2 2s; animation:text-in2 2s; font-size:16px; opacity:1; font-weight:200 !important; }
+    -webkit-animation:text-in2 2s; -moz-animation:text-in2 2s; animation:text-in2 2s; font-size:16px; opacity:1; }
 @-webkit-keyframes text-in2 { 0% { opacity:0; top:0; } 100% { opacity:1; top:180px; font-weight:300; } }
 @-moz-keyframes text-in2 { 0% { opacity:0; top:0; } 100% { opacity:1; top:180px; } }
 @keyframes text-in2 { 0% { opacity:0; top:0; } 100% { opacity:1; top:180px; } }
@@ -47,6 +43,7 @@ li { line-height:20px; }
     text-align:center; color:#fff; background-color:rgba(0,0,0,0.1); border-radius:5px; }
 
 /* ----- Content (parte de cima) ----- */
+
 .content-color { width:100%; height:50%; min-height:340px; float:left; position:relative; }
 
 .about { width:78px; height:34px; line-height:34px; line-height:34px; padding:4px 0; display:block; text-align:center; position:absolute; top:0;
@@ -69,6 +66,7 @@ li { line-height:20px; }
     text-decoration:none; transition:1s ease-in color; }
 
 /* ----- Interface (parte de baixo) ----- */
+
 .content-interface { width:70%; min-height:340px; float:left; position:relative; background-color:#eee; overflow:hidden; }
 .interface-wrap { width:100%; padding:50px 0; margin:0 auto; }
 
@@ -79,9 +77,8 @@ li { line-height:20px; }
 .counter { font-size:16px; margin-top:30px; text-align:center; color:#333; }
 .frag-per-second { font-size:10px; margin-top:2px; text-align:center; color:#999; }
 
-.gtete { color:; }
-
 /* ----- Store ----- */
+
 .store { width:30%; float:right; min-height:340px; background-color:#192332; }
 .store-wrap { overflow-x:hidden; min-height:340px; overflow-y:scroll; }
 
@@ -100,6 +97,7 @@ li { line-height:20px; }
 .store-desc { font-weight:300; font-size:12px; line-height:14px; }
 
 /* ----- Achievements ----- */
+
 .achievements { width:368px; padding:16px; position:absolute; left:50%; bottom:-200px; margin-left:-200px; background-color:#2e987e;
     border:1px solid #26826b; border-radius:3px 3px 0 0; color:#fff; font-size:14px; font-weight:300; text-align:center; opacity:0;
     transition:3s ease-in bottom, 3s ease-in opacity; }
@@ -107,4 +105,5 @@ li { line-height:20px; }
 .achievements-ativo { bottom:0; opacity:1; }
 
 /* ----- Extras ----- */
+
 .clear-both { clear:both; height:0; overflow:hidden; }
