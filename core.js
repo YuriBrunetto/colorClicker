@@ -354,7 +354,7 @@
                 return ((base + add) * (Math.pow(2, mult)) + bonus);
             }
 
-            //Game.LoadGame();
+            Game.LoadGame();
             Game.ready = 1;
             Game.Loop();
         }
@@ -421,7 +421,7 @@
                 Game.Logic();
                 Game.accumulatedDelay -= 1000 / Game.fps;
             }
-            Game.catchupLogic=0;
+            Game.catchupLogic = 0;
 
             Game.Draw();
 
