@@ -137,7 +137,7 @@
                     var localStorage = window.localStorage.getItem(Game.SaveTo);
                     if (localStorage)
                         str = unescape(localStorage);
-                    else 
+                    else
                         l("new-game").style.display = "block";
                 } else
                     if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
@@ -231,8 +231,8 @@
             Game.RebuildStore = function() {
                 var str = "";
                 for (var i in Game.Objects) {
-                    var me = Game.Objects[i];                
-                    
+                    var me = Game.Objects[i];
+
                     str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='object-" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments, | " + me.amount + " purchased</span><div class='clear-both'></div><div class='store-desc'>" + me.desc + "</div></div>";
                 }
 
@@ -308,7 +308,7 @@
                 this.red       = red;
                 this.green     = green;
                 this.blue      = blue;
-                
+
                 this.amount    = 0;
                 this.bought    = 0;
 
@@ -321,7 +321,7 @@
                         this.bought++;
                         price       = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
                         this.price  = price;
-                        
+
                         Game.red   += this.red;
                         Game.green += this.green;
                         Game.blue  += this.blue;
@@ -359,7 +359,7 @@
             Game.Loop();
         }
 
-        // lÃ³gica
+        // lógica
         Game.Logic = function(){
             Game.Earn(Game.pointsPs / Game.fps);
 
@@ -373,7 +373,7 @@
             if (Game.recalculateGains) Game.CalculateGains();
             Game.Earn(Game.pointsPs / Game.fps);
 
-            if (Game.storeToRebuild) 
+            if (Game.storeToRebuild)
                 Game.RebuildStore();
 
             if (Game.red >= 255)

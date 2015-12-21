@@ -1,24 +1,24 @@
 <!doctype html>
     <head>
-        <meta charset="utf-8">
+        <meta charset="iso-8859-1">
         <title>colorClicker</title>
-        
+
         <link type="image/x-icon"   rel="apple-touch-icon"  href="img/colorclicker.png">
         <link type="image/x-icon"   rel="shortcut icon"     href="img/colorclicker.png">
         <link type="text/css"       rel="stylesheet"        href="style.css">
 
         <meta property="og:site_name" content="colorClicker – Yuri Brunetto">
 		<meta property="og:image" content="img/colorclicker.png">
-        
+
         <script type="text/javascript" src="jquery.js"></script>
         <script type="text/javascript" src="core.js"></script>
     </head>
     <body>
-        
+
         <!-- analytics -->
         <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-63273617-1', 'auto');ga('send', 'pageview');</script>
         <!-- analytics -->
-        
+
         <div class="new-game" id="new-game">
             <div class="new-game-text">Welcome to <span style="font-weight:400">colorClicker</span>!</div>
 
@@ -33,7 +33,7 @@
             <div class="cor" id="color">rgb(0, 0, 0)</div>
             <a href="javascript:;" class="about" id="about" title="About">about</a>
         </div>
-        
+
         <div class="about-wrap">
             <div class="about-container">
                 <h2>Idea by</h2>
@@ -48,17 +48,17 @@
                 <ul>
                     <li><a href="https://twitter.com/brunettoyuri" target="_blank" title="@brunettoyrui">@brunettoyuri</a></li>
                 </ul>
-                
+
                 <a href="javascript:;" title="Close" class="about-close">Close</a>
             </div>
         </div>
-        
+
         <div class="content-interface">
             <div class="interface-wrap">
                 <div class="alerta" id="alerta"></div>
-            
+
                 <a href="javascript:;" title="Click-me" class="clicker" id="clicker">Click-me</a>
-                
+
                 <div class="counter" id="counter"></div>
                 <div class="frag-per-second" id="per-second"></div>
             </div>
@@ -68,7 +68,7 @@
                 <span class="achievements-span">You've clicked a lot and a lot! I'll give you a cookie.</span>
             </div>
         </div>
-        
+
         <div class="store">
             <div class="store-wrap">
                 <h2 style="color:#fff; padding:20px; background-color:#111926;">Store</h2>
@@ -76,17 +76,17 @@
                 <div id="products"></div>
             </div>
         </div>
-        
+
     </body>
-    
+
     <script type="text/javascript">
-    
+
         $(function(){
             $("#about").click(function(){
                 $(".about-wrap").addClass("about-wrap-ativo");
                 $(".about-container").addClass("about-container-ativo");
             });
-            
+
             $(".about-close", ".about-wrap").click(function(){
                 $(".about-wrap").removeClass("about-wrap-ativo");
                 $(".about-container").removeClass("about-container-ativo");
@@ -116,6 +116,6 @@
                 setTimeout(function(){ $(".new-game").hide(); }, 500);
             });
         });
-        
+
     </script>
 </html>
