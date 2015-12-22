@@ -2,7 +2,7 @@
 
     function l(what) { return document.getElementById(what); }
 
-    function Beautify(what, floats) { // turns 9999999 into 9,999,999 â€“ by Orteil => http://orteil.dashnet.org/
+    function Beautify(what, floats) { // turns 9999999 into 9,999,999 -€“ by Orteil => http://orteil.dashnet.org/
         var str = "";
         what = Math.round(what * 100000) / 100000; // get rid of weird rounding errors
         if (floats > 0) {
@@ -70,7 +70,7 @@
             Game.blue = 0;
 
             // save stuff
-            Game.SaveTo = "TheColorClicker";
+            Game.SaveTo = "TheFuckingColorClicker";
             Game.LocalStorage = 1;
 
             Game.startDate = parseInt(new Date().getTime());
@@ -209,6 +209,7 @@
 
                 Game.lastClick = new Date().getTime();
             }
+
             l("clicker").onclick = Game.ClickPoint; // The broken mouse convention! +1
 
             // cps
@@ -233,58 +234,28 @@
                 for (var i in Game.Objects) {
                     var me = Game.Objects[i];
 
-                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='object-" + me.id + "' title='" + me.name + "'>" + me.name + " <span class='store-span'>Cost: " + Beautify(me.price) + " fragments, | " + me.amount + " purchased</span><div class='clear-both'></div><div class='store-desc'>" + me.desc + "</div></div>";
+                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='object-" + me.id + "' title='" + me.name + "'>";
+                    str += me.name;
+                    str += "<span class='store-span'> Cost: " + Beautify(me.price) + " fragments, | " + me.amount + " purchased</span>";
+                    str += "<div class='clear-both'></div>";
+                    str += "<div class='store-desc'>" + me.desc + "</div>";
+                    str += "<div class='store-can-afford' id='can-afford-" + me.id + "'></div>"
+                    str += "</div>";
                 }
 
                 l('products').innerHTML = str;
-                Game.storeToRebuild = 0;
-            }
 
-            // upgrades
-            /*Game.upgradesToRebuild = 1;
-            Game.Upgrades = [];
-            Game.UpgradesById = [];
-            Game.UpgradesN = 0;
-            Game.UpgradesInStore = [];
-            Game.UpgradesOwn = [];
-            Game.Upgrade = function(name, desc, price, buyFunction) {
-                this.id = Game.UpgradesN;
-                this.name = name;
-                this.desc = desc;
-                this.basePrice = price;
-                this.buyFunction = buyFunction;
-                this.unlocked = 0;
-                this.bought = 0;
-                this.hide = 0; // 0 == show, 3 == hide (1-2: I have no idea)
-                this.order = this.id;
-                if (order) this.order = order + this.id * 0.001;
-                this.type = "";
-                if (type) this.type = type;
-                this.power = 0;
-                if (power) this.power = power;
+                for (var i in Game.Objects) {
+                    var obj = Game.Objects[i];
 
-                this.buy = function() {
-                    var cancelPurchase = 0;
-                    if (this.clickFunction) cancelPurchase = !this.clickFunction();
-
-                    if (!cancelPurchase) {
-                        var price = this.price;
-                        if (Game.points > price && !this.bought) {
-                            Game.Spend(price);
-                            this.bought = 1;
-                            if (this.buyFunction) this.buyFunction();
-                            Game.upgradesToRebuild = 1;
-                            Game.recalculateGains = 1;
-                            Game.UpgradesOwn++;
-                        }
-                    }
+                    if (Game.points >= obj.price)
+                        l("object-" + obj.id).style.borderColor = "#27ae60";
+                    else
+                        l("object-" + obj.id).style.borderColor = "#b82d51";
                 }
 
-                Game.Upgrades[this.name] = this;
-                Game.UpgradesById[this.id] = this;
-                Game.UpgradesN++;
-                return this;
-            }*/
+                Game.storeToRebuild = 0;
+            }
 
             Game.Has = function(what) {
                 return (Game.Objects[what] ? Game.Objects[what].bought : 0);
@@ -405,6 +376,18 @@
             l("content-color").style.backgroundColor = "rgba(" + Game.red + ", " + Game.green + ", " + Game.blue + ", 1)";
 
             document.title = Beautify(Game.points) + " " + (Game.points == 1 ? "fragment":"fragments") + " - colorClicker";
+
+            for (var i in Game.Objects) {
+                var obj = Game.Objects[i];
+
+                if (Game.points >= obj.price) {
+                    l("object-" + obj.id).style.borderColor = "#27ae60";
+                    l("can-afford-" + obj.id).innerHTML = "can afford";
+                } else {
+                    l("object-" + obj.id).style.borderColor = "#b82d51";
+                    l("can-afford-" + obj.id).innerHTML = "can't afford";
+                }
+            }
         }
 
         // da loop!
