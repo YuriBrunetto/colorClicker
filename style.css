@@ -27,7 +27,7 @@ li { line-height:20px; }
     80% { background-color:#16a085; } 90% { background-color:#f39c12; } 100% { background-color:#d35400; }
 }
 
-.new-game-text { width:100%; color:#fff; font-size:48px; font-weight:300; text-align:center; -webkit-animation:text-in 1s; -moz-animation:text-in 1s;
+.new-game-text { width:100%; color:#fff; font-size:48px; text-align:center; -webkit-animation:text-in 1s; -moz-animation:text-in 1s;
     animation:text-in 1s; position:absolute; left:0; top:100px; }
 @-webkit-keyframes text-in { 0% { opacity:0; top:0; } 100% { opacity:1; top:100px; } }
 @-moz-keyframes text-in { 0% { opacity:0; top:0; } 100% { opacity:1; top:100px; } }
