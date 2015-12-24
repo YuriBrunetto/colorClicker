@@ -86,13 +86,14 @@
                 document.onkeypress  = resetTimer;
 
                 function minusPoints() {
-                    //Game.points -= Game.points / 2;
-                    //console.log("entrou");
+                    if (Game.points >= 20 && Game.pointsPs > 0.1) {
+                        Game.points -= Game.points / 2;
+                    }
                 }
 
                 function resetTimer() {
                     clearTimeout(t);
-                    t = setTimeout(minusPoints, 3000);
+                    t = setInterval(minusPoints, 300000); // cada 30 min
                 }
             }
 
@@ -231,16 +232,19 @@
 
             Game.RebuildStore = function() {
                 var str = "";
+
                 for (var i in Game.Objects) {
                     var me = Game.Objects[i];
 
-                    str += "<div class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='object-" + me.id + "' title='" + me.name + "'>";
+                    str += "<a href='javascript:;' class='store-a' onclick='Game.ObjectsById[" + me.id + "].buy();' id='object-" + me.id + "' title='" + me.name + "'>";
                     str += me.name;
                     str += "<span class='store-span'> Cost: " + Beautify(me.price) + " fragments, | " + me.amount + " purchased</span>";
                     str += "<div class='clear-both'></div>";
                     str += "<div class='store-desc'>" + me.desc + "</div>";
-                    str += "<div class='store-can-afford' id='can-afford-" + me.id + "'></div>"
-                    str += "</div>";
+                    str += "<div class='store-can-afford' id='can-afford-" + me.id + "'></div>";
+                    str += "<div class='store-bullet' id='store-bullet-" + me.id + "'></div>"
+                    str += "<div class='clear-both'></div>";
+                    str += "</a>";
                 }
 
                 l('products').innerHTML = str;
@@ -249,9 +253,9 @@
                     var obj = Game.Objects[i];
 
                     if (Game.points >= obj.price)
-                        l("object-" + obj.id).style.borderColor = "#27ae60";
+                        l("store-bullet-" + obj.id).style.backgroundColor = "#27ae60";
                     else
-                        l("object-" + obj.id).style.borderColor = "#b82d51";
+                        l("store-bullet-" + obj.id).style.backgroundColor = "#b82d51";
                 }
 
                 Game.storeToRebuild = 0;
@@ -283,7 +287,7 @@
                 this.amount    = 0;
                 this.bought    = 0;
 
-                this.buy = function(){
+                this.buy = function(e){
                     var price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
 
                     if (Game.points >= price) {
@@ -375,19 +379,19 @@
             l("color").innerHTML = "rgb(" + Game.red + ", " + Game.green + ", " + Game.blue + ")";
             l("content-color").style.backgroundColor = "rgba(" + Game.red + ", " + Game.green + ", " + Game.blue + ", 1)";
 
-            document.title = Beautify(Game.points) + " " + (Game.points == 1 ? "fragment":"fragments") + " - colorClicker";
-
             for (var i in Game.Objects) {
                 var obj = Game.Objects[i];
 
                 if (Game.points >= obj.price) {
-                    l("object-" + obj.id).style.borderColor = "#27ae60";
+                    l("store-bullet-" + obj.id).style.backgroundColor = "#27ae60";
                     l("can-afford-" + obj.id).innerHTML = "can afford";
                 } else {
-                    l("object-" + obj.id).style.borderColor = "#b82d51";
+                    l("store-bullet-" + obj.id).style.backgroundColor = "#b82d51";
                     l("can-afford-" + obj.id).innerHTML = "can't afford";
                 }
             }
+
+            document.title = Beautify(Game.points) + " " + (Game.points == 1 ? "fragment":"fragments") + " - colorClicker";
         }
 
         // da loop!

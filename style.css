@@ -91,12 +91,13 @@ li { line-height:20px; }
 .store-wrap::scrollbar-thumb { -moz-appearance:none !important; background-color:rgba(255,255,255,0.1); }
 
 .store-a { line-height:20px; display:block; padding:20px; color:#fff; font-weight:500; cursor:pointer; margin-top:1px;
-    border-left:6px solid #000; background-color:#111926; transition:600ms all; position:relative; }
+    border-left:6px solid #263855; background-color:#152030; transition:600ms all; position:relative; }
 .store-a:hover { opacity:0.7; }
 
 .store-span { color:#aaa; font-size:12px; font-weight:300; }
 .store-desc { font-weight:300; font-size:12px; line-height:14px; }
-.store-can-afford { font-size:10px; }
+.store-can-afford { display:inline-block; font-size:10px; float:left; }
+.store-bullet { width:6px; height:6px; border-radius:50%; background-color:#fff; float:left; margin:7px 5px; transition:500ms background-color; }
 
 /* ----- Achievements ----- */
 
