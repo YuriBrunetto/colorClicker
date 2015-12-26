@@ -76,7 +76,7 @@
             Game.startDate = parseInt(new Date().getTime());
 
             // Penalidade se ficar muito tempo fora
-            Game.inactivityTime = function () {
+            Game.inactivityTime = function() {
                 var t;
                 window.onload        = resetTimer;
                 document.onmousemove = resetTimer;
@@ -132,18 +132,18 @@
 
             // load
             Game.LoadGame = function(){
-                var str = "";
+                var str;
 
                 if (Game.LocalStorage) {
                     var localStorage = window.localStorage.getItem(Game.SaveTo);
-                    if (localStorage)
-                        str = unescape(localStorage);
-                    else
-                        l("new-game").style.display = "block";
-                } else
+                    if (localStorage) str = unescape(localStorage);
+                } else {
                     if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
+                }
 
-                if (str != "") {
+                if (str == "null" || str == undefined) {
+                    l("new-game").style.display = "block";
+                } else {
                     str                 = str.split("!END!")[0];
                     var spl             = "";
                     str                 = str.split("|");
@@ -176,7 +176,14 @@
 				Game.upgradesToRebuild = 1;
             }
 
-            // earn – economics
+            // delete localStorage
+            Game.DeleteSave = function() {
+                localStorage.setItem(Game.SaveTo, null);
+                window.location.reload(true);
+                console.log("entrou");
+            }
+
+            // earn economics
             Game.Earn = function(howmuch){
                 Game.points += howmuch;
                 Game.pointsEarned += howmuch;
