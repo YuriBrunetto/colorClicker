@@ -180,7 +180,6 @@
             Game.DeleteSave = function() {
                 localStorage.setItem(Game.SaveTo, null);
                 window.location.reload(true);
-                console.log("entrou");
             }
 
             // earn economics
