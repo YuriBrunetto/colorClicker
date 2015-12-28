@@ -178,7 +178,7 @@
 
             // delete localStorage
             Game.DeleteSave = function() {
-                localStorage.clear();
+                localStorage.setItem(Game.SaveTo, " ");
                 window.location.reload(true);
             }
 
