@@ -5,17 +5,15 @@ $(function(){
     });
 
     //
-    var window_height = 0,
-        content_interface_height = 0,
-        store_height = 0;
+
+    var window_height2 = 0;
 
     $fn_resize = (function(){
-        window_height = $(window).height() / 2;
-        content_interface_height = window_height;
+        window_height2 = $(window).height() / 2;
 
-        $(".content-color").height(window_height);
-        $(".content-interface").height(content_interface_height);
-        $(".store-wrap").height(window_height);
+        $(".content-color").height(window_height2);
+        $(".content-interface").height(window_height2);
+        $(".store-wrap, .store").height($(".content-color").height() + $(".content-interface").height());
     });
 
     $(window).resize(function(){ $fn_resize(); });

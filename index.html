@@ -8,8 +8,8 @@
 
         <meta name="robots"		  content="all">
         <meta name="language"	  content="pt-br">
-        <meta name="generator"	  content="http://yuribrunetto.github.io/colorClicker">
-        <meta name="author"       content="http://yuribrunetto.github.io/colorClicker">
+        <meta name="generator"	  content="http://www.ybrntt.com.br/colorClicker">
+        <meta name="author"       content="http://www.ybrntt.com.br/colorClicker">
         <meta name="viewport"     content="initial-scale=1, user-scalable=yes">
         <meta name="webmaster"    content="Yuri Brunetto">
 
@@ -21,15 +21,16 @@
         <meta name="title"			content="colorClicker">
         <link type="image/x-icon"   rel="apple-touch-icon"  href="img/colorclicker.png">
         <link type="image/x-icon"   rel="shortcut icon"     href="img/colorclicker.png">
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" type="text/css">
         <link type="text/css"       rel="stylesheet"        href="style.css">
 
         <meta name="description" content="Reach the white color of RGB!">
 		<meta name="keywords"    content="colorClicker, incremental game, reddit, yuri brunetto, colors, click games, cookie clicker">
-		<link rel="canonical"    href="http://yuribrunetto.github.io/colorClicker">
+		<link rel="canonical"    href="http://www.ybrntt.com.br/colorClicker">
 
 		<meta property="og:title"		content="colorClicker">
 		<meta property="og:description"	content="Reach the white color of RGB!">
-		<meta property="og:url"			content="http://yuribrunetto.github.io/colorClicker">
+		<meta property="og:url"			content="http://www.ybrntt.com.br/colorClicker">
 
         <meta property="og:site_name" content="colorClicker -€“ Yuri Brunetto">
 		<meta property="og:image"     content="img/colorclicker.png">
@@ -41,7 +42,15 @@
     <body>
 
         <!-- analytics -->
-        <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-63273617-1', 'auto');ga('send', 'pageview');</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-71853699-1', 'auto');
+            ga('send', 'pageview');
+        </script>
         <!-- analytics -->
 
         <div class="new-game" id="new-game">
@@ -55,16 +64,25 @@
         </div>
 
         <div class="content-color" id="content-color">
-            <div class="cor" id="color">rgb(0, 0, 0)</div>
-            <!-- a href="javascript:;" class="about" id="about" title="About">about</a -->
-            <a href="javascript:;" class="reset" onclick="Game.DeleteSave();" title="Reset">reset</a>
+            <div class="cor" id="color">rgb(0,0,0)</div>
+            <!-- <a href="javascript:;" class="reset" onclick="Game.DeleteSave();" title="Reset">reset</a> -->
+        </div>
+
+        <div class="store">
+            <div class="store-wrap">
+                <h2 style="color:#fff; padding:32px; background-color:#263040;">Store</h2>
+
+                <div id="products"></div>
+            </div>
         </div>
 
         <div class="content-interface">
             <div class="interface-wrap">
                 <div class="alerta" id="alerta"></div>
 
-                <a href="javascript:;" title="Click-me" class="clicker" id="clicker">Click-me</a>
+                <a href="javascript:;" title="Click-me" class="clicker" id="clicker">
+                    <img src="http://www.ybrntt.com.br/colorClicker/img/clickme.png" alt="Click-me" class="img-retina">
+                </a>
 
                 <div class="counter" id="counter"></div>
                 <div class="frag-per-second" id="per-second"></div>
@@ -73,14 +91,6 @@
             <div class="achievements">
                 Achievement unlocked - <span style="font-weight:500;">Wow! What a clicker!</span><br>
                 <span class="achievements-span">You've clicked a lot and a lot! I'll give you a cookie.</span>
-            </div>
-        </div>
-
-        <div class="store">
-            <div class="store-wrap">
-                <h2 style="color:#fff; padding:20px; background-color:#111926;">Store</h2>
-
-                <div id="products"></div>
             </div>
         </div>
 

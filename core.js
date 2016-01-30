@@ -69,6 +69,12 @@
             Game.green = 0;
             Game.blue = 0;
 
+            // first color
+            var _colors = ["red", "green", "blue"];
+            var r = Math.floor(Math.random() * _colors.length);
+
+            Game.colorMaster = _colors[r];
+
             // save stuff
             Game.SaveTo = "TheFuckingColorClicker";
             Game.LocalStorage = 1;
@@ -149,7 +155,8 @@
                     str                 = str.split("|");
                     Game.startDate      = parseInt(spl[0]);
                     spl                 = str[2].split(";"); // points
-                    Game.points         = parseFloat(spl[0]); Game.pointsEarned = parseFloat(spl[1]);
+                    Game.points         = parseFloat(spl[0]);
+                    Game.pointsEarned = parseFloat(spl[1]);
                     Game.pointClicks    = spl[2] ? parseInt(spl[2]) : 0;
                     Game.red            = parseInt(spl[3]);
                     Game.green          = parseInt(spl[4]);
@@ -176,9 +183,38 @@
 				Game.upgradesToRebuild = 1;
             }
 
-            // delete localStorage
+            // delete localStorage - FUCKING HARD DELETE MOTHERFUCKER
             Game.DeleteSave = function() {
-                localStorage.setItem(Game.SaveTo, null);
+                // points and stuff
+                Game.pointsEarned = 0;
+                Game.pointClicks = 0;
+                Game.points = 0;
+                Game.pointsd = 0;
+                Game.pointsPs = 0;
+                Game.pointsReset = 0;
+                Game.points = 0;
+
+                // colors for the bg
+                Game.red = 0;
+                Game.green = 0;
+                Game.blue = 0;
+
+                Game.startDate = parseInt(new Date().getTime());
+
+                Game.BuildingsOwned = 0;
+
+                for (var i in Game.ObjectsById) {
+                    var me = Game.ObjectsById[i];
+
+                    me.amount = 0;
+                    me.bought = 0;
+                    Game.BuildingsOwned = 0;
+                    me.bought = 0;
+                    me.totalPoints = 0;
+                    me.increase = 0;
+                    Game.storeToRebuild = 1;
+                }
+
                 window.location.reload(true);
             }
 
@@ -209,6 +245,13 @@
                         Game.autoclickerDetected += Game.fps;
                         if (Game.autoclickerDetected >= Game.fps*5) console.log("King!");
                     }
+
+                    // bg clicker random
+                    var c1 = Math.floor(Math.random() * (200 - 20 + 1)) + 20;
+                    var c2 = Math.floor(Math.random() * (200 - 20 + 1)) + 20;
+                    var c3 = Math.floor(Math.random() * (200 - 20 + 1)) + 20;
+
+                    l("clicker").style.background = "rgb(" + c1 + ", " + c2 + ", " + c3 + ")";
 
                     Game.Earn(Game.computedMouseCps);
                     Game.pointClicks++;
@@ -258,10 +301,11 @@
                 for (var i in Game.Objects) {
                     var obj = Game.Objects[i];
 
-                    if (Game.points >= obj.price)
+                    if (Game.points >= obj.price) {
                         l("store-bullet-" + obj.id).style.backgroundColor = "#27ae60";
-                    else
+                    } else {
                         l("store-bullet-" + obj.id).style.backgroundColor = "#b82d51";
+                    }
                 }
 
                 Game.storeToRebuild = 0;
@@ -294,7 +338,7 @@
                 this.bought    = 0;
 
                 this.buy = function(e){
-                    var price = this.basePrice * Math.pow(Game.priceIncrease, this.amount);
+                    var price = Math.floor(this.basePrice * Math.pow(Game.priceIncrease, this.amount));
 
                     if (Game.points >= price) {
                         Game.Spend(price);
@@ -328,7 +372,7 @@
             new Game.Object("Paint Brush", "Gives to you 1 point of green and 0.1 fragments per second.", 450, 4, 0.1, 0, 1, 0);
             new Game.Object("Master Brush", "Gives to you 2 points of green, 1 point of blue and 0.2 fragments per second.", 1000, 5, 0.2, 0, 2, 1);
             new Game.Object("Spray", "Gives to you 5 points of green, 2 points of blue and 0.4 fragments per second.", 2500, 6, 0.4, 0, 5, 2);
-            new Game.Object("Red Brush", "Gives to you 2 points of red and 0.4 fragments per second.", 3000, 7, 0.4, 1, 0, 0);
+            new Game.Object("Red Brush", "Gives to you 2 points of red and 0.4 fragments per second.", 3000, 7, 0.4, 2, 0, 0);
 
             Game.ComputeCps = function(base, add, mult, bonus) {
                 if (!bonus) bonus = 0;
@@ -366,8 +410,8 @@
             if (Game.blue >= 255)
                 Game.blue = 255;
 
-            if (Game.red == 255 && Game.green == 255 && Game.blue == 255)
-                Game.Win();
+            // if (Game.red == 255 && Game.green == 255 && Game.blue == 255)
+            //     Game.Win();
 
             Game.SaveGame();
         }
@@ -382,13 +426,14 @@
             l("per-second").innerHTML = Beautify(Game.pointsPs, 1) + " per second";
 
             // updates the bg color
-            l("color").innerHTML = "rgb(" + Game.red + ", " + Game.green + ", " + Game.blue + ")";
+            l("color").innerHTML = "rgb(" + Game.red + "," + Game.green + "," + Game.blue + ")";
             l("content-color").style.backgroundColor = "rgba(" + Game.red + ", " + Game.green + ", " + Game.blue + ", 1)";
 
             for (var i in Game.Objects) {
                 var obj = Game.Objects[i];
+                var preco = Math.floor(obj.price);
 
-                if (Game.points >= obj.price) {
+                if (Game.points >= preco) {
                     l("store-bullet-" + obj.id).style.backgroundColor = "#27ae60";
                     l("can-afford-" + obj.id).innerHTML = "can afford";
                 } else {
