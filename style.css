@@ -54,7 +54,7 @@ li { line-height:20px; }
 
 .alerta { height:20px; line-height:20px; color:brown; text-align:center; font-size:14px; opacity:0; transition:500ms opacity; }
 
-.clicker { width:130px; height:60px; display:block; margin:50px auto; border-radius:4px; background-color:#2e987e; overflow:hidden; transition:300ms; }
+.clicker { width:130px; height:60px; display:block; margin:50px auto; border-radius:4px; background-color:#2e987e; overflow:hidden; transition:300ms; cursor:pointer; }
 .counter { font-size:16px; margin-top:30px; text-align:center; color:#333; }
 .frag-per-second { font-size:10px; margin-top:2px; text-align:center; color:#999; }
 
