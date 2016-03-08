@@ -127,7 +127,6 @@
                     str = escape(str);
 
                     window.localStorage.setItem(Game.SaveTo, str);
-                    window.localStorage.setItem("masterColor", Game.colorMaster);
                 } else {
                     var now = new Date();
                     now.setFullYear(now.getFullYear() + 5);
@@ -143,15 +142,7 @@
 
                 if (Game.LocalStorage) {
                     var localStorage = window.localStorage.getItem(Game.SaveTo);
-                    // loads all stuff
                     if (localStorage) str = unescape(localStorage);
-
-                    // loads only the master color of the page
-                    var localStorageColor = window.localStorage.getItem("masterColor");
-                    if (localStorageColor) {
-                        console.log(localStorageColor);
-                        Game.masterColor = localStorageColor;
-                    }
                 } else {
                     if (document.cookie.indexOf(Game.SaveTo) >= 0) str = unescape(document.cookie.split(Game.SaveTo + "=")[1]);
                 }

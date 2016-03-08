@@ -62,6 +62,8 @@ li { line-height:20px; }
 
 .store { width:30%; float:right; background-color:#192332; }
 .store-wrap { overflow-x:hidden; overflow-y:scroll; }
+.store-header { font-weight:bold; font-size:24px; color:#fff; padding:32px; background-color:#263040; position:relative; }
+.store-header-color { width:2.4583333333em; height:1.4583333333em; position:absolute; right:1.3333333333em; top:1.2083333333em; }
 
 .store-wrap::-webkit-scrollbar-track { background-color:none; }
 .store-wrap::-webkit-scrollbar { width:8px !important; }
