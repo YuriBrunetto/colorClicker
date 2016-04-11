@@ -1,8 +1,8 @@
 (function(){
-
+    
     function l(what) { return document.getElementById(what); }
 
-    function Beautify(what, floats) { // turns 9999999 into 9,999,999 -€“ by Orteil => http://orteil.dashnet.org/
+    function Beautify(what, floats) { // turns 9999999 into 9,999,999 -ï¿½ï¿½ by Orteil => http://orteil.dashnet.org/
         var str = "";
         what = Math.round(what * 100000) / 100000; // get rid of weird rounding errors
         if (floats > 0) {
@@ -243,7 +243,7 @@
                 } else {
                     if (new Date().getTime() - Game.lastClick < 1000 / 15) {
                         Game.autoclickerDetected += Game.fps;
-                        if (Game.autoclickerDetected >= Game.fps * 5) { // se for muito rápido
+                        if (Game.autoclickerDetected >= Game.fps * 5) { // se for muito rï¿½pido
                             Game.points = 0;
                             alerta("So, you're a smartass, huh?! No points for you.");
                         }
@@ -387,7 +387,7 @@
             Game.Loop();
         }
 
-        // lógica
+        // lï¿½gica
         Game.Logic = function(){
             Game.Earn(Game.pointsPs / Game.fps);
 
